@@ -17,6 +17,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
         super(actual, selfType);
     }
 
+    // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)I
     public SELF checkValidIntValue(
             final Consumer<? super ToIntBiFunction<? super Long, ? super TemporalField>> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
@@ -27,6 +28,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
+    // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)J
     public SELF checkValidValue(
             final Consumer<? super ToLongBiFunction<? super Long, ? super TemporalField>> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
@@ -37,6 +39,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
+    // -------------------------------------------------------------------------------------------- getLargestMinimum()J
     public SELF hasLargestMinimum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
@@ -45,6 +48,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
+    // --------------------------------------------------------------------------------------------------- getMaximum()J
     public SELF hasMaximum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
@@ -53,6 +57,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
+    // --------------------------------------------------------------------------------------------------- getMinimum()J
     public SELF hasMinimum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
@@ -61,6 +66,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
+    // ------------------------------------------------------------------------------------------- getSmallestMaximum()J
     public SELF hasSmallestMaximum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
@@ -69,7 +75,8 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
-    public SELF isFixed(final boolean expected) {
+    // ------------------------------------------------------------------------------------------------------ isFixed()Z
+    protected SELF isFixed(final boolean expected) {
         return isNotNull()
                 .satisfies(a -> {
                     Assertions.assertThat(a.isFixed())
@@ -77,27 +84,66 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 });
     }
 
-    public SELF isIntValue() {
+    public SELF isFixed() {
+        return isFixed(true);
+    }
+
+    public SELF isNotFixed() {
+        return isFixed(false);
+    }
+
+    // --------------------------------------------------------------------------------------------------- isIntValue()Z
+    protected SELF isIntValue(final boolean expected) {
         return isNotNull()
                 .satisfies(a -> {
                     Assertions.assertThat(a.isIntValue())
+                            .isEqualTo(expected);
+                });
+    }
+
+    public SELF isIntValue() {
+        return isIntValue(true);
+    }
+
+    public SELF allValuesFitInInt() {
+        return isIntValue(true);
+    }
+
+    public SELF notAllValuesFitInInt() {
+        return isIntValue(true);
+    }
+
+    // --------------------------------------------------------------------------------------------- isValidIntValue(I)Z
+
+    public SELF isValidIntValue(final long value) {
+        return isNotNull()
+                .satisfies(a -> {
+                    Assertions.assertThat(a.isValidIntValue(value))
                             .isTrue();
                 });
     }
 
-    public SELF isValidIntValue(final long expected) {
+    /**
+     * Asserts that the {@link #actual} checks given value as a valid int value.
+     *
+     * @param value the value to check.
+     * @return {@link #myself}.
+     * @see #isValidIntValue(long)
+     */
+    public SELF checksAsValidIntValue(final long value) {
+        return isValidIntValue(value);
+    }
+
+    // ------------------------------------------------------------------------------------------------ isValidValue(L)Z
+    public SELF isValidValue(final long value) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.isValidIntValue(expected))
+                    Assertions.assertThat(a.isValidValue(value))
                             .isTrue();
                 });
     }
 
-    public SELF isValidValue(final long expected) {
-        return isNotNull()
-                .satisfies(a -> {
-                    Assertions.assertThat(a.isValidValue(expected))
-                            .isTrue();
-                });
+    public SELF checksAsValidValue(final long value) {
+        return isValidValue(value);
     }
 }
