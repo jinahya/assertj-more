@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.time.temporal.TemporalAccessor;
 import java.util.stream.Stream;
 
-class DefaultTemporalAccessorAssert_ExtractingLong_Test
+class DefaultTemporalAccessorAssert_Extracting_Test
         extends AbstractTemporalAccessorAssertTest<DefaultTemporalAccessorAssert, TemporalAccessor> {
 
     private static Stream<TemporalAccessor> temporalAccessors() {
@@ -18,13 +18,13 @@ class DefaultTemporalAccessorAssert_ExtractingLong_Test
         );
     }
 
-    DefaultTemporalAccessorAssert_ExtractingLong_Test() {
+    DefaultTemporalAccessorAssert_Extracting_Test() {
         super(DefaultTemporalAccessorAssert.class, TemporalAccessor.class);
     }
 
     @MethodSource({"temporalAccessors"})
     @ParameterizedTest
-    void extractingLong__(final TemporalAccessor actual) {
-        super.extractingLong__(actual);
+    void extracting__(final TemporalAccessor actual) {
+        super.extracting__(actual);
     }
 }

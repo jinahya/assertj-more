@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -55,6 +55,8 @@ abstract class AbstractTemporalAccessorAssertTest<
                     assertion.has(field, expected);
                 })
                 .doesNotThrowAnyException();
+        Assertions.assertThat(assertion.has(field, expected))
+                .isSameAs(assertion);
     }
 
     void has_DoesThrow_(final ACTUAL actual, final TemporalField field, final int expected) {
@@ -89,6 +91,8 @@ abstract class AbstractTemporalAccessorAssertTest<
                     assertion.hasLong(field, expected);
                 })
                 .doesNotThrowAnyException();
+        Assertions.assertThat(assertion.hasLong(field, expected))
+                .isSameAs(assertion);
     }
 
     void hasLong_DoesThrow_(final ACTUAL actual, final TemporalField field, final long expected) {
@@ -111,6 +115,8 @@ abstract class AbstractTemporalAccessorAssertTest<
                         assertion.supports(field);
                     })
                     .doesNotThrowAnyException();
+            Assertions.assertThat(assertion.supports(field))
+                    .isSameAs(assertion);
         }
     }
 
@@ -140,6 +146,8 @@ abstract class AbstractTemporalAccessorAssertTest<
                         assertion.doesNotSupport(field);
                     })
                     .doesNotThrowAnyException();
+            Assertions.assertThat(assertion.doesNotSupport(field))
+                    .isSameAs(assertion);
         }
     }
 

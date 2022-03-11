@@ -1,14 +1,20 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.AbstractIntegerAssert;
+import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.Assertions;
 
 import java.time.temporal.TemporalField;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.ToIntBiFunction;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.LongFunction;
 import java.util.function.ToLongBiFunction;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * An abstract assert class for verifying values of {@link ValueRange}.
@@ -30,17 +36,29 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     }
 
     // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)I
-    public SELF checkValidIntValue(
-            final Consumer<? super ToIntBiFunction<? super Long, ? super TemporalField>> consumer) {
-        Objects.requireNonNull(consumer, "consumer is null");
-        return isNotNull()
-                .satisfies(a -> {
-                    final ToIntBiFunction<Long, TemporalField> f = a::checkValidIntValue;
-                    consumer.accept(f);
-                });
+    protected <R> R checkValidIntValue(final long value, final TemporalField field,
+                                       final Function<? super SELF, ? extends IntFunction<? extends R>> function) {
+        Objects.requireNonNull(function, "function is null");
+        return function.apply(isNotNull())
+                .apply(actual.checkValidIntValue(value, field));
+    }
+
+    public AbstractIntegerAssert<?> extractingValidIntValueOf(final long value, final TemporalField field) {
+        return checkValidIntValue(value, field, s -> Assertions::assertThat);
     }
 
     // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)J
+    protected <R> R checkValidValue(final long value, final TemporalField field,
+                                    final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
+        Objects.requireNonNull(function, "function is null");
+        return function.apply(isNotNull())
+                .apply(actual.checkValidValue(value, field));
+    }
+
+    public AbstractLongAssert<?> extractingValidValueOf(final long value, final TemporalField field) {
+        return checkValidValue(value, field, s -> Assertions::assertThat);
+    }
+
     public SELF checkValidValue(
             final Consumer<? super ToLongBiFunction<? super Long, ? super TemporalField>> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
@@ -55,7 +73,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF hasLargestMinimum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.getLargestMinimum())
+                    assertThat(a.getLargestMinimum())
                             .isEqualTo(expected);
                 });
     }
@@ -64,7 +82,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF hasMaximum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.getMaximum())
+                    assertThat(a.getMaximum())
                             .isEqualTo(expected);
                 });
     }
@@ -73,7 +91,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF hasMinimum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.getMinimum())
+                    assertThat(a.getMinimum())
                             .isEqualTo(expected);
                 });
     }
@@ -82,7 +100,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF hasSmallestMaximum(final long expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.getSmallestMaximum())
+                    assertThat(a.getSmallestMaximum())
                             .isEqualTo(expected);
                 });
     }
@@ -91,7 +109,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     protected SELF isFixed(final boolean expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.isFixed())
+                    assertThat(a.isFixed())
                             .isEqualTo(expected);
                 });
     }
@@ -108,7 +126,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     protected SELF isIntValue(final boolean expected) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.isIntValue())
+                    assertThat(a.isIntValue())
                             .isEqualTo(expected);
                 });
     }
@@ -130,7 +148,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF isValidIntValue(final long value) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.isValidIntValue(value))
+                    assertThat(a.isValidIntValue(value))
                             .isTrue();
                 });
     }
@@ -150,7 +168,7 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     public SELF isValidValue(final long value) {
         return isNotNull()
                 .satisfies(a -> {
-                    Assertions.assertThat(a.isValidValue(value))
+                    assertThat(a.isValidValue(value))
                             .isTrue();
                 });
     }

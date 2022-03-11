@@ -1,11 +1,11 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import java.time.temporal.TemporalAccessor;
 
 public class DefaultTemporalAccessorAssert
         extends AbstractTemporalAccessorAssert<DefaultTemporalAccessorAssert, TemporalAccessor> {
 
-    public static AbstractTemporalAccessorAssert<?, TemporalAccessor> assertThat(final TemporalAccessor actual) {
+    public static AbstractTemporalAccessorAssert<?, TemporalAccessor> assertMore(final TemporalAccessor actual) {
         return new DefaultTemporalAccessorAssert(actual);
     }
 

@@ -1,6 +1,6 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
-import com.github.jinahya.assertj.extended.MoreAssertions;
+import com.github.jinahya.assertj.more.MoreAssertions;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.AbstractLongAssert;
@@ -168,13 +168,13 @@ public abstract class AbstractTemporalAccessorAssert<
     }
 
     public AbstractValueRangeAssert<?> extractingRange(final TemporalField field) {
-        return range(field, s -> MoreAssertions::assertThat);
+        return range(field, s -> MoreAssertions::assertMore);
     }
 
     public SELF rangeSatisfies(final TemporalField field, final Consumer<? super ValueRange> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
         return range(field, s -> v -> {
-            MoreAssertions.assertThat(v).satisfies(consumer);
+            MoreAssertions.assertMore(v).satisfies(consumer);
             return s;
         });
     }

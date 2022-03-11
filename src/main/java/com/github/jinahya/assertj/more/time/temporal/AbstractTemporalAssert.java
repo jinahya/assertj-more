@@ -1,7 +1,7 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
+import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.AbstractLongAssert;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 
 import java.time.temporal.Temporal;
@@ -9,6 +9,9 @@ import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * An abstract class for verifying instances of {@link Temporal} interface.
@@ -21,7 +24,7 @@ public abstract class AbstractTemporalAssert<
         SELF extends AbstractTemporalAssert<SELF, ACTUAL>,
         ACTUAL extends Temporal
         >
-        extends AbstractTemporalAccessorAssert<SELF, ACTUAL> {
+        extends AbstractAssert<SELF, ACTUAL> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -34,41 +37,37 @@ public abstract class AbstractTemporalAssert<
     }
 
     // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
-
-    /**
-     * Asserts that the result of {@link Temporal#isSupported(TemporalUnit)} method invoked with specified unit is equal
-     * to specified value.
-     *
-     * @param unit     the unit.
-     * @param expected the expected result of {@code actual#isSupported(unit)}.
-     * @return {@link #myself}.
-     */
-    protected SELF isSupported(final TemporalUnit unit, final boolean expected) {
-        return isNotNull()
-                .satisfies(a -> {
-                    Assertions.assertThat(a.isSupported(unit))
-                            .isEqualTo(expected);
-                });
+    protected <R> R isSupported(
+            final TemporalUnit unit,
+            final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
+        return function.apply(isNotNull())
+                .apply(actual.isSupported(unit));
     }
 
     /**
      * Asserts that specified unit is supported by the {@link #actual}.
      *
      * @param unit the unit.
-     * @return {@link #myself}.
+     * @return {@link SELF}
      */
     public SELF supports(final TemporalUnit unit) {
-        return isSupported(unit, true);
+        return isSupported(unit, s -> r -> {
+            assertThat(r).isTrue();
+            return s;
+        });
     }
 
     /**
      * Asserts that specified unit is not supported by the {@link #actual}.
      *
      * @param unit the unit.
-     * @return {@link #myself}.
+     * @return {@link SELF}.
      */
     public SELF doesNotSupport(final TemporalUnit unit) {
-        return isSupported(unit, false);
+        return isSupported(unit, s -> r -> {
+            assertThat(r).isFalse();
+            return s;
+        });
     }
 
     // ----------------------------------------------------------------------------------- minus(J,TemporalUnit)Temporal

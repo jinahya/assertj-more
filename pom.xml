@@ -9,7 +9,7 @@
     <version>0.8.6</version>
   </parent>
 
-  <artifactId>assertj-extended</artifactId>
+  <artifactId>assertj-more</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -49,21 +49,22 @@
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-javadoc-plugin>3.1.0</version.maven-javadoc-plugin>
     <version.maven-surefire>2.22.2</version.maven-surefire>
-    <version.org.junit.jupiter>5.6.0</version.org.junit.jupiter>
-    <version.org.mockito>3.3.0</version.org.mockito>
+    <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
+    <version.org.mockito>4.4.0</version.org.mockito>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
+<!--      <version>1.2.3</version>-->
+      <version>1.3.0-alpha14</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
-      <version>1.8</version>
+      <version>1.9</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -106,12 +107,12 @@
       <version>${version.org.junit.jupiter}</version>
       <scope>test</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.mockito</groupId>-->
-    <!--      <artifactId>mockito-core</artifactId>-->
-    <!--      <version>${version.org.mockito}</version>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>${version.org.mockito}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
@@ -127,7 +128,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.12</version>
+      <version>1.18.22</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -161,7 +162,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.5</version>
+          <version>0.8.7</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -272,41 +273,41 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${version.maven-surefire}</version>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.18</version>
-        <executions>
-          <execution>
-            <id>check-signature-java15:1.0</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <signature>
-                <groupId>org.codehaus.mojo.signature</groupId>
-                <artifactId>java15</artifactId>
-                <version>1.0</version>
-              </signature>
-            </configuration>
-          </execution>
-          <execution>
-            <id>check-signature-android-api-level-9:2.3.1_r2</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <signature>
-                <groupId>net.sf.androidscents.signature</groupId>
-                <artifactId>android-api-level-9</artifactId>
-                <version>2.3.1_r2</version>
-              </signature>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.codehaus.mojo</groupId>-->
+<!--        <artifactId>animal-sniffer-maven-plugin</artifactId>-->
+<!--        <version>1.18</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>check-signature-java15:1.0</id>-->
+<!--            <phase>process-classes</phase>-->
+<!--            <goals>-->
+<!--              <goal>check</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <signature>-->
+<!--                <groupId>org.codehaus.mojo.signature</groupId>-->
+<!--                <artifactId>java15</artifactId>-->
+<!--                <version>1.0</version>-->
+<!--              </signature>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--          <execution>-->
+<!--            <id>check-signature-android-api-level-9:2.3.1_r2</id>-->
+<!--            <phase>process-classes</phase>-->
+<!--            <goals>-->
+<!--              <goal>check</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <signature>-->
+<!--                <groupId>net.sf.androidscents.signature</groupId>-->
+<!--                <artifactId>android-api-level-9</artifactId>-->
+<!--                <version>2.3.1_r2</version>-->
+<!--              </signature>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -341,12 +342,12 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>3.1.12.2</version>
+        <version>4.5.3.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -372,7 +373,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.12.0</version>
+        <version>3.15.0</version>
         <configuration>
           <targetJdk>1.6</targetJdk>
           <skipEmptyReport>false</skipEmptyReport> <!-- https://issues.apache.org/jira/browse/MPMD-225 -->

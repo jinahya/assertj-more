@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

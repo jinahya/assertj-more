@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.extended.time.temporal;
+package com.github.jinahya.assertj.more.time.temporal;
 
 import java.time.temporal.Temporal;
 
@@ -10,7 +10,7 @@ import java.time.temporal.Temporal;
 public class DefaultTemporalAssert
         extends AbstractTemporalAssert<DefaultTemporalAssert, Temporal> {
 
-    public static AbstractTemporalAssert<?, Temporal> assertThat(final Temporal actual) {
+    public static AbstractTemporalAssert<?, Temporal> assertMore(final Temporal actual) {
         return new DefaultTemporalAssert(actual);
     }
 
