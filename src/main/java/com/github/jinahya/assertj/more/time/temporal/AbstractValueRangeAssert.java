@@ -5,11 +5,13 @@ import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.Assertions;
 
+import java.time.DateTimeException;
 import java.time.temporal.TemporalField;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
 import java.util.function.LongFunction;
 import java.util.function.ToLongBiFunction;
@@ -45,6 +47,33 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
 
     public AbstractIntegerAssert<?> extractingValidIntValueOf(final long value, final TemporalField field) {
         return checkValidIntValue(value, field, s -> Assertions::assertThat);
+    }
+
+    public SELF checksAsValidIntValue(final long value, final TemporalField field, final IntConsumer consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        try {
+            return checkValidIntValue(value, field, s -> r -> {
+                consumer.accept(r);
+                return s;
+            });
+        } catch (final DateTimeException dte) {
+            final var message = String.format("%1$s does not check %2$d as a valid int value", actual, value);
+            throw new AssertionError(message, dte);
+        }
+    }
+
+    public SELF doesNotCheckAsValidIntValue(final long value, final TemporalField field, final IntConsumer consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        try {
+            return checkValidIntValue(value, field, s -> r -> {
+                consumer.accept(r);
+                return s;
+            });
+        } catch (final DateTimeException dte) {
+            // expected
+        }
+        final var message = String.format("%1$s does check %2$d as a valid int value", actual, value);
+        throw new AssertionError(message);
     }
 
     // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)J
@@ -144,36 +173,48 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
     }
 
     // --------------------------------------------------------------------------------------------- isValidIntValue(I)Z
-
-    public SELF isValidIntValue(final long value) {
-        return isNotNull()
-                .satisfies(a -> {
-                    assertThat(a.isValidIntValue(value))
-                            .isTrue();
-                });
+    protected <R> R isValidIntValue(
+            final long value,
+            final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
+        return Objects.requireNonNull(function, "function is null")
+                .apply(isNotNull())
+                .apply(actual.isValidIntValue(value));
     }
 
-    /**
-     * Asserts that the {@link #actual} checks given value as a valid int value.
-     *
-     * @param value the value to check.
-     * @return {@link #myself}.
-     * @see #isValidIntValue(long)
-     */
-    public SELF checksAsValidIntValue(final long value) {
-        return isValidIntValue(value);
+    public SELF testsAsValidIntValue(final long value) {
+        return isValidIntValue(value, s -> (Boolean r) -> {
+            Assertions.assertThat(r).isTrue();
+            return s;
+        });
+    }
+
+    public SELF doesNotTestsAsValidIntValue(final long value) {
+        return isValidIntValue(value, s -> (Boolean r) -> {
+            Assertions.assertThat(r).isFalse();
+            return s;
+        });
     }
 
     // ------------------------------------------------------------------------------------------------ isValidValue(L)Z
-    public SELF isValidValue(final long value) {
-        return isNotNull()
-                .satisfies(a -> {
-                    assertThat(a.isValidValue(value))
-                            .isTrue();
-                });
+    protected <R> R isValidValue(
+            final long value,
+            final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
+        return Objects.requireNonNull(function, "function is null")
+                .apply(isNotNull())
+                .apply(actual.isValidValue(value));
     }
 
-    public SELF checksAsValidValue(final long value) {
-        return isValidValue(value);
+    public SELF testsAsValidValue(final long value) {
+        return isValidValue(value, s -> (Boolean r) -> {
+            Assertions.assertThat(r).isTrue();
+            return s;
+        });
+    }
+
+    public SELF doesNotTestsAsValidValue(final long value) {
+        return isValidValue(value, s -> (Boolean r) -> {
+            Assertions.assertThat(r).isFalse();
+            return s;
+        });
     }
 }
