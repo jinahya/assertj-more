@@ -10,9 +10,21 @@ import java.util.function.Consumer;
 import java.util.function.ToIntBiFunction;
 import java.util.function.ToLongBiFunction;
 
+/**
+ * An abstract assert class for verifying values of {@link ValueRange}.
+ *
+ * @param <SELF> self type parameter.
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF>>
         extends AbstractAssert<SELF, ValueRange> {
 
+    /**
+     * Creates a new instance with specified actual value and self type.
+     *
+     * @param actual   the actual value to verify.
+     * @param selfType the self type.
+     */
     protected AbstractValueRangeAssert(final ValueRange actual, final Class<SELF> selfType) {
         super(actual, selfType);
     }
