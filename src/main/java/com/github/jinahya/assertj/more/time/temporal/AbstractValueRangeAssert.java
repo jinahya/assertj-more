@@ -9,6 +9,7 @@ import java.time.DateTimeException;
 import java.time.temporal.TemporalField;
 import java.time.temporal.ValueRange;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntConsumer;
@@ -45,10 +46,36 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
                 .apply(actual.checkValidIntValue(value, field));
     }
 
+    protected <R> R checkValidIntValue2(
+            final long value, final TemporalField field,
+            final Function<? super SELF, ? extends BiFunction<? super Integer, ? super DateTimeException, ? extends R>> function) {
+        Objects.requireNonNull(function, "function is null");
+        final var self = isNotNull();
+        Integer result = 0;
+        DateTimeException dateTimeException = null;
+        try {
+            result = actual.checkValidIntValue(value, field);
+        } catch (final DateTimeException dte) {
+            dateTimeException = dte;
+        }
+        return function.apply(self)
+                .apply(result, dateTimeException);
+    }
+
     public AbstractIntegerAssert<?> extractingValidIntValueOf(final long value, final TemporalField field) {
         return checkValidIntValue(value, field, s -> Assertions::assertThat);
     }
 
+    /**
+     * Asserts that {@code actual.checkValidIntValue(value, field)} does not throw any exception and accepts the result
+     * to specified consumer.
+     *
+     * @param value    the {@code value} argument.
+     * @param field    the {@code field} argument.
+     * @param consumer the consumer to which the result is accepted.
+     * @return {@link SELF}.
+     * @see ValueRange#checkValidIntValue(long, TemporalField)
+     */
     public SELF checksAsValidIntValue(final long value, final TemporalField field, final IntConsumer consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
         try {
@@ -62,18 +89,33 @@ public class AbstractValueRangeAssert<SELF extends AbstractValueRangeAssert<SELF
         }
     }
 
-    public SELF doesNotCheckAsValidIntValue(final long value, final TemporalField field, final IntConsumer consumer) {
-        Objects.requireNonNull(consumer, "consumer is null");
-        try {
-            return checkValidIntValue(value, field, s -> r -> {
-                consumer.accept(r);
+    /**
+     * Asserts that {@code actual.checkValidIntValue(value, field)} does not check specified values as a valid int
+     * value.
+     *
+     * @param value the {@code value} argument.
+     * @param field the {@code field} argument.
+     * @return {@link SELF}.
+     * @see ValueRange#checkValidIntValue(long, TemporalField)
+     */
+    public SELF doesNotCheckAsValidIntValue(final long value, final TemporalField field) {
+        if (true) {
+            return checkValidIntValue2(value, field, s -> (r, e) -> {
+                Assertions.assertThat(e).isNotNull();
                 return s;
             });
+        }
+        SELF self = null;
+        try {
+            self = checkValidIntValue(value, field, s -> r -> {
+                return s;
+            });
+            final var message = String.format("%1$s does check %2$d as a valid int value", actual, value);
+            throw new AssertionError(message);
         } catch (final DateTimeException dte) {
             // expected
         }
-        final var message = String.format("%1$s does check %2$d as a valid int value", actual, value);
-        throw new AssertionError(message);
+        return Objects.requireNonNull(self, "self is null");
     }
 
     // --------------------------------------------------------------------------- checkValidIntValue(J, TemporalField)J
