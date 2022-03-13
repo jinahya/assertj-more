@@ -41,9 +41,9 @@
   </issueManagement>
 
   <properties>
-    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
+<!--    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>-->
     <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
@@ -168,26 +168,6 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>4.2.1</version>
-        <executions>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <exportScr>true</exportScr>
-          <instructions>
-            <_include>-bnd.bnd</_include>
-          </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <version>3.0.0-M2</version>
@@ -240,33 +220,11 @@
         <version>3.1.1</version>
         <configuration>
           <archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+            <manifestEntries>
+              <Automatic-Module-Name>com.github.jinahya.assertj.more</Automatic-Module-Name>
+            </manifestEntries>
           </archive>
         </configuration>
-        <executions>
-          <execution>
-            <id>retrotranslated13</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <classesDirectory>${project.build.outputDirectory.retrotranslated13}</classesDirectory>
-              <classifier>retrotranslated13</classifier>
-            </configuration>
-          </execution>
-          <execution>
-            <id>retrotranslated14</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <classesDirectory>${project.build.outputDirectory.retrotranslated14}</classesDirectory>
-              <classifier>retrotranslated14</classifier>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
