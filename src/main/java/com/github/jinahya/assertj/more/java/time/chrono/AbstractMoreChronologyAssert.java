@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class AbstractChronologyAssert<
-        SELF extends AbstractChronologyAssert<SELF, ACTUAL>,
+public abstract class AbstractMoreChronologyAssert<
+        SELF extends AbstractMoreChronologyAssert<SELF, ACTUAL>,
         ACTUAL extends Chronology>
-        extends AbstractComparableAssert<SELF, ACTUAL> {
+        extends AbstractComparableAssert<SELF, ACTUAL>
+        implements MoreChronologyAssert<SELF, ACTUAL> {
 
     // chronology classes to assert classes
     private static final Map<Class<?>, Class<?>> ASSERT_CLASSES;
@@ -22,12 +23,12 @@ public abstract class AbstractChronologyAssert<
         ASSERT_CLASSES = Collections.unmodifiableMap(assertClasses);
     }
 
-    protected AbstractChronologyAssert(final ACTUAL actual, final Class<SELF> selfType) {
+    protected AbstractMoreChronologyAssert(final ACTUAL actual, final Class<SELF> selfType) {
         super(actual, selfType);
     }
 
-    public <C extends Chronology, A extends AbstractChronologyAssert<A, C>> A extracting(final Class<C> chronologyClass,
-                                                                                         final Class<A> assertClass) {
+    public <C extends Chronology, A extends AbstractMoreChronologyAssert<A, C>> A extracting(final Class<C> chronologyClass,
+                                                                                             final Class<A> assertClass) {
         return Optional.ofNullable(ASSERT_CLASSES.get(chronologyClass))
                 .map(ac -> {
                     try {
@@ -42,8 +43,8 @@ public abstract class AbstractChronologyAssert<
     }
 
     @SuppressWarnings({"unchecked"})
-    public <C extends Chronology, A extends AbstractChronologyAssert<A, C>> A extracting(
+    public <C extends Chronology, A extends AbstractMoreChronologyAssert<A, C>> A extracting(
             final Class<C> chronologyClass) {
-        return (A) extracting(chronologyClass, AbstractChronologyAssert.class);
+        return (A) extracting(chronologyClass, AbstractMoreChronologyAssert.class);
     }
 }

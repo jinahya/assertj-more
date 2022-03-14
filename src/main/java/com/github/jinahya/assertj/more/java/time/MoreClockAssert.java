@@ -25,6 +25,7 @@ public interface MoreClockAssert<SELF extends MoreClockAssert<SELF, ACTUAL>, ACT
         return extractingZoneApplying(factory::createAssert);
     }
 
+    @SuppressWarnings({"unchecked"})
     default SELF hasZone(final ZoneId expected) {
         return MoreClockAssertHelper.getZone((SELF) this, s -> r -> {
             Assertions.assertThat(r)
@@ -32,4 +33,6 @@ public interface MoreClockAssert<SELF extends MoreClockAssert<SELF, ACTUAL>, ACT
             return s;
         });
     }
+
+    // TODO: 2022/03/14 Add more!
 }

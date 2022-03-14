@@ -15,6 +15,6 @@ class MoreJavaTimeTemporalAssertionsTest {
                 .isBefore(actual.plusYears(1L))
                 .supports(ChronoUnit.YEARS)
                 .test()
-                ;
+        ;
     }
 }

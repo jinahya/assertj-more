@@ -2,10 +2,13 @@ package com.github.jinahya.assertj.more.hidden;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assert;
+import org.assertj.core.api.Assertions;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class ForAssert {
@@ -26,11 +29,11 @@ public final class ForAssert {
     @SuppressWarnings({"unchecked"})
     public static <SELF extends Assert<?, ?>> SELF invokeIsNotNull(final SELF self) {
         Objects.requireNonNull(self, "self is null");
-        try {
-            return (SELF) HANDLE_IS_NOT_NULL.invoke(self);
-        } catch (final Throwable t) {
-            throw new RuntimeException(t);
-        }
+        // https://github.com/assertj/assertj-core/issues/1652#issuecomment-1061246488
+        final List<SELF> results = new ArrayList<>(1);
+        Assertions.assertThatCode(() -> results.add((SELF) HANDLE_IS_NOT_NULL.invoke(self)))
+                .doesNotThrowAnyException();
+        return results.get(0);
     }
 
     @SuppressWarnings({"unchecked"})

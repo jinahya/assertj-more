@@ -18,8 +18,7 @@ class MoreTemporalAccessorAssertHelper {
 
     // --------------------------------------------------------------------------------------------- get(TemporalField)I
     static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends TemporalAccessor, R> R get(
-            final TemporalField field,
-            final SELF self,
+            final TemporalField field, final SELF self,
             final Function<? super SELF, ? extends IntFunction<? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(ForAssert.invokeIsNotNull(self))

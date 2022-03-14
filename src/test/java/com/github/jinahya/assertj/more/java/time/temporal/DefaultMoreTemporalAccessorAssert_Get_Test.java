@@ -8,6 +8,4 @@ class DefaultMoreTemporalAccessorAssert_Get_Test
     DefaultMoreTemporalAccessorAssert_Get_Test() {
         super(MoreTemporalAccessorAssertImpl.class, TemporalAccessor.class);
     }
-
-
 }

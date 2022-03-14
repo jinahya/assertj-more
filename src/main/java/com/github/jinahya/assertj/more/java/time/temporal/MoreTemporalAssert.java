@@ -13,7 +13,7 @@ import java.time.temporal.TemporalUnit;
 public interface MoreTemporalAssert<
         SELF extends MoreTemporalAssert<SELF, ACTUAL>,
         ACTUAL extends Temporal>
-        extends MoreJavaTimeTemporalAssert<SELF, ACTUAL> {
+        extends MoreTemporalAccessorAssert<SELF, ACTUAL> {
 
     // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
     default SELF supports(final TemporalUnit unit) {

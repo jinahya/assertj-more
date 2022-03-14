@@ -19,7 +19,7 @@ public interface MoreValueRangeAssert<SELF extends MoreValueRangeAssert<SELF>>
     // ---------------------------------------------------------------------------- checkValidIntValue(J,TemporalField)I
 
     /**
-     * Asserts that {@link ValueRange#checkValidIntValue(long, TemporalField)} method, invoked on {@link #actual} with
+     * Asserts that {@link ValueRange#checkValidIntValue(long, TemporalField)} method, invoked on {@code actual} with
      * specified arguments, does not throw any exception.
      *
      * @param value the {@code value} argument.

@@ -17,7 +17,8 @@ public class AbstractMoreLocalDateAssert<SELF extends AbstractMoreLocalDateAsser
     /**
      * Creates a new instance with specified actual.
      *
-     * @param actual the actual.
+     * @param actual   the actual.
+     * @param selfType self type.
      */
     protected AbstractMoreLocalDateAssert(final LocalDate actual, Class<SELF> selfType) {
         super(actual, selfType);

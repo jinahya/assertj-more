@@ -1,6 +1,6 @@
 package com.github.jinahya.assertj.more.java.time;
 
-import com.github.jinahya.assertj.more.java.time.temporal.AbstractTemporalAmountAssert;
+import com.github.jinahya.assertj.more.java.time.temporal.AbstractMoreTemporalAmountAssert;
 
 import java.time.Duration;
 import java.time.temporal.TemporalAmount;
@@ -14,7 +14,7 @@ import java.util.function.Function;
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
 abstract class AbstractTemporalAmountAssert_<SELF extends AbstractTemporalAmountAssert_<SELF, ACTUAL>, ACTUAL extends TemporalAmount>
-        extends AbstractTemporalAmountAssert<SELF, ACTUAL> {
+        extends AbstractMoreTemporalAmountAssert<SELF, ACTUAL> {
 
     /**
      * Creates a new instance with specified actual value and self type.
