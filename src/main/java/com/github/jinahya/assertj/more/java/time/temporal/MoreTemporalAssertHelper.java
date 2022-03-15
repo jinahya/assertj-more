@@ -23,7 +23,7 @@ final class MoreTemporalAssertHelper {
             final TemporalUnit unit,
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).isSupported(unit));
     }
 
@@ -39,7 +39,7 @@ final class MoreTemporalAssertHelper {
             final long amountToSubtract, final TemporalUnit unit,
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).minus(amountToSubtract, unit));
     }
 

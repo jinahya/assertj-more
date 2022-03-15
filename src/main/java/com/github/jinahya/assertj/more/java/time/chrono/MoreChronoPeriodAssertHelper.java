@@ -13,7 +13,7 @@ class MoreChronoPeriodAssertHelper {
     static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends ChronoPeriod, R> R getChronology(
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Chronology, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getChronology());
     }
 
@@ -21,7 +21,7 @@ class MoreChronoPeriodAssertHelper {
     static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends ChronoPeriod, R> R isZero(
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).isZero());
     }
 
@@ -29,7 +29,7 @@ class MoreChronoPeriodAssertHelper {
     static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends ChronoPeriod, R> R isNegative(
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).isNegative());
     }
 

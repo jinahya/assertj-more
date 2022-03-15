@@ -11,7 +11,7 @@ class ForAssertTest {
 
     @Test
     void invokeIsNotNull__() {
-        final AbstractLocalDateTimeAssert<?> self = ForAssert.invokeIsNotNull(assertThat(LocalDateTime.now()));
+        final AbstractLocalDateTimeAssert<?> self = ForAssert.assertActualIsNotNull(assertThat(LocalDateTime.now()));
         assertThat(self).isNotNull();
     }
 }

@@ -12,14 +12,14 @@ final class MoreEraAssertHelper {
 
     static <S extends MoreEraAssert<S, A>, A extends Era, R> R getValue(
             final S self, final Function<? super S, ? extends IntFunction<? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getValue());
     }
 
     static <S extends MoreEraAssert<S, A>, A extends Era, R> R getDisplayName(
             final TextStyle style, final Locale locale, final S self,
             final Function<? super S, ? extends Function<? super String, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getDisplayName(style, locale));
     }
 

@@ -17,7 +17,7 @@ final class MoreTemporalAmountAssertHelper {
             final Temporal temporal, SELF self,
             final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
         // https://github.com/assertj/assertj-core/issues/1652#issuecomment-1061246488
-        self = ForAssert.invokeIsNotNull(self);
+        self = ForAssert.assertActualIsNotNull(self);
         final ACTUAL actual = ForAssert.getActual(self);
         final Temporal[] results = new Temporal[1];
         Assertions.assertThatCode(() -> results[0] = actual.addTo(temporal))
@@ -31,7 +31,7 @@ final class MoreTemporalAmountAssertHelper {
             final TemporalUnit unit, SELF self,
             final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
         // https://github.com/assertj/assertj-core/issues/1652#issuecomment-1061246488
-        self = ForAssert.invokeIsNotNull(self);
+        self = ForAssert.assertActualIsNotNull(self);
         final ACTUAL actual = ForAssert.getActual(self);
         final long[] results = new long[1];
         Assertions.assertThatCode(() -> results[0] = actual.get(unit))
@@ -44,7 +44,7 @@ final class MoreTemporalAmountAssertHelper {
     static <SELF extends MoreTemporalAmountAssert<SELF, ACTUAL>, ACTUAL extends TemporalAmount, R> R getUnits(
             final TemporalUnit unit, final SELF self,
             final Function<? super SELF, ? extends Function<? super List<TemporalUnit>, ? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getUnits());
     }
 
@@ -53,7 +53,7 @@ final class MoreTemporalAmountAssertHelper {
             final Temporal temporal, SELF self,
             final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
         // https://github.com/assertj/assertj-core/issues/1652#issuecomment-1061246488
-        self = ForAssert.invokeIsNotNull(self);
+        self = ForAssert.assertActualIsNotNull(self);
         final ACTUAL actual = ForAssert.getActual(self);
         final Temporal[] results = new Temporal[1];
         Assertions.assertThatCode(() -> results[0] = actual.subtractFrom(temporal))

@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 public final class ForAssert {
 
@@ -27,22 +28,30 @@ public final class ForAssert {
     }
 
     @SuppressWarnings({"unchecked"})
-    public static <SELF extends Assert<?, ?>> SELF invokeIsNotNull(final SELF self) {
+    public static <S extends Assert<?, ?>> S assertActualIsNotNull(final S self) {
         Objects.requireNonNull(self, "self is null");
         // https://github.com/assertj/assertj-core/issues/1652#issuecomment-1061246488
-        final List<SELF> results = new ArrayList<>(1);
-        Assertions.assertThatCode(() -> results.add((SELF) HANDLE_IS_NOT_NULL.invoke(self)))
+        final List<S> results = new ArrayList<>(1);
+        Assertions.assertThatCode(() -> results.add((S) HANDLE_IS_NOT_NULL.invoke(self)))
                 .doesNotThrowAnyException();
         return results.get(0);
     }
 
     @SuppressWarnings({"unchecked"})
-    public static <SELF extends Assert<?, ACTUAL>, ACTUAL> ACTUAL getActual(final SELF self) {
+    public static <S extends Assert<?, A>, A> A getActual(final S self) {
         Objects.requireNonNull(self, "self is null");
         if (self instanceof AbstractAssert) {
-            return ForAbstractAssert.getActual((AbstractAssert<?, ? extends ACTUAL>) self);
+            return ForAbstractAssert.getActual((AbstractAssert<?, ? extends A>) self);
         }
         throw new RuntimeException("unable to get actual from " + self);
+    }
+
+    public static <S extends Assert<?, A>, A, R> R assertActualIsNotNullAndApply(
+            final S self,
+            final Function<? super A, ? extends R> function) {
+        final A actual = getActual(self);
+        Assertions.assertThat(actual).isNotNull();
+        return function.apply(actual);
     }
 
     private ForAssert() {

@@ -13,7 +13,7 @@ final class MoreInstantAssertHelper {
     static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends Instant, R> R getEpochSecond(
             final SELF self,
             final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getEpochSecond());
     }
 

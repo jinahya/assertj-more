@@ -13,8 +13,7 @@ class MoreJavaTimeTemporalAssertionsTest {
         MoreJavaTimeTemporalAssertions.assertMore(actual)
                 .isNotNull()
                 .isBefore(actual.plusYears(1L))
-                .supports(ChronoUnit.YEARS)
-                .test()
+                .supports(ChronoUnit.YEARS);
         ;
     }
 }

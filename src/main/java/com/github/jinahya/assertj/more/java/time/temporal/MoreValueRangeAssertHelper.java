@@ -15,7 +15,7 @@ final class MoreValueRangeAssertHelper {
             final long value, final TemporalField field,
             final SELF self,
             final Function<? super SELF, ? extends IntFunction<? extends R>> function) {
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).checkValidIntValue(value, field)); // DateTimeException
     }
 

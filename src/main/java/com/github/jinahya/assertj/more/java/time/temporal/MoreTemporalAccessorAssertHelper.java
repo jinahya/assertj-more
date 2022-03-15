@@ -21,7 +21,7 @@ class MoreTemporalAccessorAssertHelper {
             final TemporalField field, final SELF self,
             final Function<? super SELF, ? extends IntFunction<? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).get(field));
     }
 
@@ -31,7 +31,7 @@ class MoreTemporalAccessorAssertHelper {
             final SELF self,
             final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getLong(field));
     }
 
@@ -41,7 +41,7 @@ class MoreTemporalAccessorAssertHelper {
             final SELF self,
             final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).isSupported(field));
     }
 
@@ -58,7 +58,7 @@ class MoreTemporalAccessorAssertHelper {
             final SELF self,
             final Function<? super SELF, ? extends Function<? super R, ? extends X>> function) {
         Objects.requireNonNull(function, "function is null");
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).query(query));
     }
 
@@ -88,7 +88,7 @@ class MoreTemporalAccessorAssertHelper {
             final SELF self,
             final Function<? super SELF, ? extends Function<? super ValueRange, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
-        return function.apply(ForAssert.invokeIsNotNull(self))
+        return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).range(field));
     }
 
