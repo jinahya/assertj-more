@@ -12,35 +12,35 @@ import java.time.temporal.TemporalAmount;
 /**
  * An interface for verifying values of {@link ChronoPeriod} interface.
  *
- * @param <SELF>   self type parameter
- * @param <ACTUAL> actual type parameter
+ * @param <S>   self type parameter
+ * @param <A> actual type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
 public interface MoreChronoPeriodAssert<
-        SELF extends MoreChronoPeriodAssert<SELF, ACTUAL>,
-        ACTUAL extends ChronoPeriod>
-        extends MoreJavaTimeChronoAssert<SELF, ACTUAL>,
-                MoreTemporalAmountAssert<SELF, ACTUAL> {
+        S extends MoreChronoPeriodAssert<S, A>,
+        A extends ChronoPeriod>
+        extends MoreJavaTimeChronoAssert<S, A>,
+                MoreTemporalAmountAssert<S, A> {
 
     // --------------------------------------------------------------------------------------- getChronology()Chronology
     default AbstractMoreChronologyAssert<?, Chronology> extractingChronology() {
-        return MoreChronoPeriodAssertHelper.getChronology((SELF) this, s -> MoreChronologyAssertImpl::new);
+        return MoreChronoPeriodAssertHelper.getChronology((S) this, s -> MoreChronologyAssertImpl::new);
     }
 
     // ------------------------------------------------------------------------------------------------------- isZero()Z
     default AbstractBooleanAssert<?> extractingIsZero() {
-        return MoreChronoPeriodAssertHelper.isZero((SELF) this, s -> Assertions::assertThat);
+        return MoreChronoPeriodAssertHelper.isZero((S) this, s -> Assertions::assertThat);
     }
 
-    default SELF isZero() {
-        return MoreChronoPeriodAssertHelper.isZero((SELF) this, s -> r -> {
+    default S isZero() {
+        return MoreChronoPeriodAssertHelper.isZero((S) this, s -> r -> {
             Assertions.assertThat(r).isTrue();
             return s;
         });
     }
 
-    default SELF isNotZero() {
-        return MoreChronoPeriodAssertHelper.isZero((SELF) this, s -> r -> {
+    default S isNotZero() {
+        return MoreChronoPeriodAssertHelper.isZero((S) this, s -> r -> {
             Assertions.assertThat(r).isFalse();
             return s;
         });
@@ -48,7 +48,7 @@ public interface MoreChronoPeriodAssert<
 
     // --------------------------------------------------------------------------------------------------- isNegative()Z
     default AbstractBooleanAssert<?> extractingIsNegative() {
-        return MoreChronoPeriodAssertHelper.isNegative((SELF) this, s -> Assertions::assertThat);
+        return MoreChronoPeriodAssertHelper.isNegative((S) this, s -> Assertions::assertThat);
     }
 
     /**
@@ -56,8 +56,8 @@ public interface MoreChronoPeriodAssert<
      *
      * @return this assertion.
      */
-    default SELF isNegative() {
-        return MoreChronoPeriodAssertHelper.isNegative((SELF) this, s -> r -> {
+    default S isNegative() {
+        return MoreChronoPeriodAssertHelper.isNegative((S) this, s -> r -> {
             Assertions.assertThat(r).isTrue();
             return s;
         });
@@ -68,45 +68,45 @@ public interface MoreChronoPeriodAssert<
      *
      * @return this assertion.
      */
-    default SELF isNotNegative() {
-        return MoreChronoPeriodAssertHelper.isNegative((SELF) this, s -> r -> {
+    default S isNotNegative() {
+        return MoreChronoPeriodAssertHelper.isNegative((S) this, s -> r -> {
             Assertions.assertThat(r).isFalse();
             return s;
         });
     }
 
     // -------------------------------------------------------------------------------- plus(TemporalAmount)ChronoPeriod
-    Assert<?, ACTUAL> extractingPlus(TemporalAmount amountToAdd);
+    Assert<?, A> extractingPlus(TemporalAmount amountToAdd);
 
-    default Assert<?, ACTUAL> asAddedBy(final TemporalAmount amountToAdd) {
+    default Assert<?, A> asAddedBy(final TemporalAmount amountToAdd) {
         return extractingPlus(amountToAdd);
     }
 
     // ------------------------------------------------------------------------------- minus(TemporalAmount)ChronoPeriod
-    Assert<?, ACTUAL> extractingMinus(TemporalAmount amountToSubtract);
+    Assert<?, A> extractingMinus(TemporalAmount amountToSubtract);
 
-    default Assert<?, ACTUAL> asSubtractedBy(final TemporalAmount amountToSubtract) {
+    default Assert<?, A> asSubtractedBy(final TemporalAmount amountToSubtract) {
         return extractingMinus(amountToSubtract);
     }
 
     // ------------------------------------------------------------------------------------- multipliedBy(I)ChronoPeriod
-    Assert<?, ACTUAL> extractingMultipliedBy(int scalar);
+    Assert<?, A> extractingMultipliedBy(int scalar);
 
-    default Assert<?, ACTUAL> asMultipliedBy(final int scalar) {
+    default Assert<?, A> asMultipliedBy(final int scalar) {
         return extractingMultipliedBy(scalar);
     }
 
     // ------------------------------------------------------------------------------------------- negated()ChronoPeriod
-    Assert<?, ACTUAL> extractingNegated();
+    Assert<?, A> extractingNegated();
 
-    default Assert<?, ACTUAL> asNegated() {
+    default Assert<?, A> asNegated() {
         return extractingNegated();
     }
 
     // ---------------------------------------------------------------------------------------- normalized()ChronoPeriod
-    Assert<?, ACTUAL> extractingNormalized();
+    Assert<?, A> extractingNormalized();
 
-    default Assert<?, ACTUAL> asNormalized() {
+    default Assert<?, A> asNormalized() {
         return extractingNormalized();
     }
 }

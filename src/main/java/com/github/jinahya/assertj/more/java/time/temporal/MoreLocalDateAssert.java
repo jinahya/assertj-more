@@ -1,6 +1,8 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
 import com.github.jinahya.assertj.more.hidden.ForAssert;
+import com.github.jinahya.assertj.more.java.time.AbstractMoreOffsetDateTimeAssert;
+import com.github.jinahya.assertj.more.java.time.MoreJavaTimeAssertions;
 import com.github.jinahya.assertj.more.java.time.chrono.MoreChronoLocalDateAssert;
 import com.github.jinahya.assertj.more.java.time.chrono.MoreChronoLocalDateAssertHelper;
 import org.assertj.core.api.AbstractComparableAssert;
@@ -12,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -43,12 +47,13 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         return new MoreLocalDateTimeAssertImpl(actual);
     }
 
-    //    default AbstractMoreLocalDateTimeAssert<?> extractingAtTime(final OffsetTime time) {
-//        @SuppressWarnings({"unchecked"})
-//        final S self = (S) this;
-//        final OffsetDateTime actual = ForAssert.assertActualIsNotNullAndApply(self, a -> a.atTime(time));
-//        return new MoreLocalDateTimeAssertImpl(actual);
-//    }
+    default AbstractMoreOffsetDateTimeAssert<?> extractingAtTime(final OffsetTime time) {
+        @SuppressWarnings({"unchecked"})
+        final S self = (S) this;
+        final OffsetDateTime actual = ForAssert.assertActualIsNotNullAndApply(self, a -> a.atTime(time));
+        return MoreJavaTimeAssertions.assertMore(actual);
+    }
+
     default AbstractMoreLocalDateTimeAssert<?> extractingAtStartOfDay() {
         @SuppressWarnings({"unchecked"})
         final S self = (S) this;

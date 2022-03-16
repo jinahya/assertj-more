@@ -54,6 +54,16 @@ public final class ForAssert {
         return function.apply(actual);
     }
 
+    public static <S extends Assert<?, A>, A, R> R assertActualIsNotNullAndApply2(
+            final S self,
+            final Function<? super S, ? extends Function<? super A, ? extends R>> function) {
+        final A actual = getActual(self);
+        Assertions.assertThat(actual).isNotNull().extracting(a -> {
+            return function.apply(self).apply(a);
+        });
+        return function.apply(self).apply(actual);
+    }
+
     private ForAssert() {
         throw new AssertionError("instantiation is not allowed");
     }

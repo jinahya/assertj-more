@@ -1,6 +1,8 @@
 package com.github.jinahya.assertj.more.java.time.chrono;
 
 import org.assertj.core.api.AbstractComparableAssert;
+import org.assertj.core.api.ComparableAssert;
+import org.assertj.core.api.GenericComparableAssert;
 
 import java.lang.reflect.Constructor;
 import java.time.chrono.Chronology;
@@ -10,10 +12,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public abstract class AbstractMoreChronologyAssert<
-        SELF extends AbstractMoreChronologyAssert<SELF, ACTUAL>,
-        ACTUAL extends Chronology>
-        extends AbstractComparableAssert<SELF, ACTUAL>
-        implements MoreChronologyAssert<SELF, ACTUAL> {
+        S extends AbstractMoreChronologyAssert<S, A>,
+        A extends Chronology>
+        extends AbstractComparableAssert<S, A>
+        implements MoreChronologyAssert<S, A> {
 
     // chronology classes to assert classes
     private static final Map<Class<?>, Class<?>> ASSERT_CLASSES;
@@ -23,8 +25,9 @@ public abstract class AbstractMoreChronologyAssert<
         ASSERT_CLASSES = Collections.unmodifiableMap(assertClasses);
     }
 
-    protected AbstractMoreChronologyAssert(final ACTUAL actual, final Class<SELF> selfType) {
+    protected AbstractMoreChronologyAssert(final A actual, final Class<S> selfType) {
         super(actual, selfType);
+        comparableAssertDelegate = new GenericComparableAssert<>(actual);
     }
 
     public <C extends Chronology, A extends AbstractMoreChronologyAssert<A, C>> A extracting(final Class<C> chronologyClass,
@@ -47,4 +50,6 @@ public abstract class AbstractMoreChronologyAssert<
             final Class<C> chronologyClass) {
         return (A) extracting(chronologyClass, AbstractMoreChronologyAssert.class);
     }
+
+    private final ComparableAssert<?, Chronology> comparableAssertDelegate;
 }

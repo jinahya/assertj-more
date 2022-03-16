@@ -14,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalUnit;
+import java.time.temporal.ValueRange;
 
 public class MoreJavaTimeTemporalAssertions
         extends AbstractMoreAssertions {
@@ -67,6 +68,10 @@ public class MoreJavaTimeTemporalAssertions
         } catch (final ReflectiveOperationException roe) {
             throw new RuntimeException(roe);
         }
+    }
+
+    public static AbstractMoreValueRangeAssert<?> assertMore(final ValueRange actual) {
+        return new MoreValueRangeAssertImpl(actual);
     }
 
     protected MoreJavaTimeTemporalAssertions() {

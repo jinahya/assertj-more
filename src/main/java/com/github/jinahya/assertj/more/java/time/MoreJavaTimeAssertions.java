@@ -5,6 +5,7 @@ import com.github.jinahya.assertj.more.AbstractMoreAssertions;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.Period;
 
 public class MoreJavaTimeAssertions
@@ -20,6 +21,10 @@ public class MoreJavaTimeAssertions
 
     public static AbstractMoreInstantAssert<?> assertMore(final Instant actual) {
         return new MoreInstantAssertImpl(actual);
+    }
+
+    public static AbstractMoreOffsetDateTimeAssert<?> assertMore(final OffsetDateTime actual) {
+        return new MoreOffsetDateTimeAssertImpl(actual);
     }
 
     public static AbstractMorePeriodAssert<?> assertMore(final Period actual) {
