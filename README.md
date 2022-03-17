@@ -1,4 +1,4 @@
-# assertj-extended
+# assertj-more
 
 Provides more assertions on top of [AssertJ](https://github.com/assertj/assertj-core).
 
