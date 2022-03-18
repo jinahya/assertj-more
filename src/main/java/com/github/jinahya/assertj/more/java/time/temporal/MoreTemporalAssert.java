@@ -1,37 +1,49 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
+import com.github.jinahya.assertj.more.hidden.ForAssert;
+import org.assertj.core.api.AbstractLongAssert;
+import org.assertj.core.api.Assertions;
+
 import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 
 /**
  * An abstract class for verifying instances of {@link Temporal} interface.
  *
- * @param <SELF>   self type parameter
- * @param <ACTUAL> actual type parameter
+ * @param <S> self type parameter
+ * @param <A> actual type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public interface MoreTemporalAssert<
-        SELF extends MoreTemporalAssert<SELF, ACTUAL>,
-        ACTUAL extends Temporal>
-        extends MoreTemporalAccessorAssert<SELF, ACTUAL> {
+public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extends Temporal>
+        extends MoreTemporalAccessorAssert<S, A> {
 
     // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
-    default SELF supports(final TemporalUnit unit) {
-        return MoreTemporalAssertHelper.extractingIsSupported(unit, (SELF) this, s -> a -> {
+    default S supports(final TemporalUnit unit) {
+        return MoreTemporalAssertHelper.extractingIsSupported(unit, (S) this, s -> a -> {
             a.isTrue();
             return s;
         });
     }
 
-    default SELF doesNotSupport(final TemporalUnit unit) {
-        return MoreTemporalAssertHelper.extractingIsSupported(unit, (SELF) this, s -> a -> {
+    default S doesNotSupport(final TemporalUnit unit) {
+        return MoreTemporalAssertHelper.extractingIsSupported(unit, (S) this, s -> a -> {
             a.isFalse();
             return s;
         });
     }
 
-    // ----------------------------------------------------------------------------------- minus(J,TemporalUnit)Temporal
-//    default MoreTemporalAssert<?, Temporal> extractingMinus(final long amountToSubtract, final TemporalUnit unit) {
+    MoreTemporalAssert<?, A> extractingMinus(long amountToSubtract, TemporalUnit unit);
+
+    MoreTemporalAssert<?, A> extractingMinus(TemporalAmount amount);
+
+    MoreTemporalAssert<?, A> extractingPlus(long amountToAdd, TemporalUnit unit);
+
+    MoreTemporalAssert<?, A> extractingPlus(TemporalAmount amount);
+
+    //    default MoreTemporalAssert<?, Temporal> extractingMinus(final long amountToSubtract, final TemporalUnit unit) {
 //        return MoreTemporalAssertHelper.minus(amountToSubtract, unit, (SELF) this, s -> DefaultMoreTemporalAssert::new);
 //    }
 //
@@ -96,14 +108,14 @@ public interface MoreTemporalAssert<
 //        return extractingPlusCreating(amount, DefaultMoreTemporalAssert::new);
 //    }
 //
-//    // ----------------------------------------------------------------------------------- until(Temporal,TemporalUnit)J
-//    protected <R> R until(final Temporal endExclusive, final TemporalUnit unit,
-//                          final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
-//        return function.apply(isNotNull())
-//                .apply(actual.until(endExclusive, unit));
-//    }
-//
-//    public AbstractLongAssert<?> extractingUntil(final Temporal endExclusive, final TemporalUnit unit) {
-//        return until(endExclusive, unit, s -> Assertions::assertThat);
-//    }
+    default AbstractLongAssert<?> extractingUntil(Temporal endExclusive, TemporalUnit unit) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.until(endExclusive, unit))
+        );
+    }
+
+    MoreTemporalAssert<?, ? extends Temporal> with(TemporalAdjuster adjuster);
+
+    MoreTemporalAssert<?, ? extends Temporal> with(TemporalField field, long newValue);
 }

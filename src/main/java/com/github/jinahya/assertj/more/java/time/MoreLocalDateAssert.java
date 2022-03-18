@@ -13,7 +13,9 @@ import java.time.Month;
 import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -250,14 +252,6 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
 
     // --------------------------------------------------------------------------------------- LocalDate#getDayOfWeek()I
 
-    @Override
-    default AbstractMorePeriodAssert<?> extractingUntil(final ChronoLocalDate endDateExclusive) {
-        return ForAssert.applyNonNullActual1(
-                isNotNull(),
-                a -> MoreJavaTimeAssertions.assertMore(a.until(endDateExclusive))
-        );
-    }
-
     // ------------------------------------------------------------------------------------- withYear(int year)LocalDate
     default AbstractMoreLocalDateAssert<?> extractingWithYear(final int year) {
         @SuppressWarnings({"unchecked"})
@@ -384,5 +378,29 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         extractingPlusDays(daysToAdd)
                 .satisfies(consumer);
         return (S) this;
+    }
+
+    @Override
+    default AbstractMorePeriodAssert<?> extractingUntil(final ChronoLocalDate endDateExclusive) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> MoreJavaTimeAssertions.assertMore(a.until(endDateExclusive))
+        );
+    }
+
+    @Override
+    default AbstractMoreLocalDateAssert<?> with(final TemporalAdjuster adjuster) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> MoreJavaTimeAssertions.assertMore(a.with(adjuster))
+        );
+    }
+
+    @Override
+    default AbstractMoreLocalDateAssert<?> with(final TemporalField field, final long newValue) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> MoreJavaTimeAssertions.assertMore(a.with(field, newValue))
+        );
     }
 }

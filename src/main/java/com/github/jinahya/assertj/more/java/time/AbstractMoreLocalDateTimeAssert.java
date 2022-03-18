@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @param <SELF> self type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public class AbstractMoreLocalDateTimeAssert<SELF extends AbstractMoreLocalDateTimeAssert<SELF>>
+public abstract class AbstractMoreLocalDateTimeAssert<SELF extends AbstractMoreLocalDateTimeAssert<SELF>>
         extends AbstractLocalDateTimeAssert<SELF>
         implements MoreLocalDateTimeAssert<SELF> {
 

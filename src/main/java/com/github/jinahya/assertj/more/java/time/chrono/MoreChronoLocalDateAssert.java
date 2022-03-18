@@ -16,7 +16,9 @@ import java.time.chrono.ChronoPeriod;
 import java.time.chrono.Chronology;
 import java.time.chrono.Era;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -224,13 +226,17 @@ public interface MoreChronoLocalDateAssert<
         );
     }
 
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingMinus(long amountToSubtract, TemporalUnit unit);
+    @Override
+    MoreChronoLocalDateAssert<?, A> extractingMinus(long amountToSubtract, TemporalUnit unit);
 
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingMinus(TemporalAmount amount);
+    @Override
+    MoreChronoLocalDateAssert<?, A> extractingMinus(TemporalAmount amount);
 
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingPlus(long amountToAdd, TemporalUnit unit);
+    @Override
+    MoreChronoLocalDateAssert<?, A> extractingPlus(long amountToAdd, TemporalUnit unit);
 
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingPlus(TemporalAmount amount);
+    @Override
+    MoreChronoLocalDateAssert<?, A> extractingPlus(TemporalAmount amount);
 
     default AbstractLongAssert<?> extractingToEpochDay() {
         return ForAssert.applyNonNullActual1(
@@ -255,4 +261,10 @@ public interface MoreChronoLocalDateAssert<
     }
 
     MoreChronoPeriodAssert<?, ? extends ChronoPeriod> extractingUntil(ChronoLocalDate endDateExclusive);
+
+    @Override
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> with(TemporalAdjuster adjuster);
+
+    @Override
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> with(TemporalField field, long newValue);
 }

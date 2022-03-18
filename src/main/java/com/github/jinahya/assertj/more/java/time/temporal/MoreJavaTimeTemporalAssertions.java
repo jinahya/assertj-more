@@ -22,9 +22,9 @@ public class MoreJavaTimeTemporalAssertions
         return new MoreTemporalAccessorAssertImpl(actual);
     }
 
-    public static AbstractMoreTemporalAssert<?> assertMore(final Temporal actual) {
-        return new MoreTemporalAssertImpl(actual);
-    }
+//    public static AbstractMoreTemporalAssert<?> assertMore(final Temporal actual) {
+//        return new MoreTemporalAssertImpl(actual);
+//    }
 
     // --------------------------------------------------------------------------------- java.time.temporal.TemporalUnit
     public static AbstractMoreTemporalUnitAssert<?, TemporalUnit> assertMore(final TemporalUnit actual) {

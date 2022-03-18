@@ -4,7 +4,7 @@ import org.assertj.core.api.AbstractInstantAssert;
 
 import java.time.Instant;
 
-public class AbstractMoreInstantAssert<SELF extends AbstractMoreInstantAssert<SELF>>
+public abstract class AbstractMoreInstantAssert<SELF extends AbstractMoreInstantAssert<SELF>>
         extends AbstractInstantAssert<SELF>
         implements MoreInstantAssert<SELF> {
 
