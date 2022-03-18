@@ -9,7 +9,7 @@ public class MoreJavaTimeZoneAssertions
         extends AbstractMoreAssertions {
 
     public static AbstractZoneIdAssert<?, ZoneId> assertMore(final ZoneId actual) {
-        return ZoneIdAssert.assertMore(actual);
+        return new MoreZoneIdAssertImpl(actual);
     }
 
     public static AbstractZoneRulesAssert<?, ZoneRules> assertMore(final ZoneRules actual) {

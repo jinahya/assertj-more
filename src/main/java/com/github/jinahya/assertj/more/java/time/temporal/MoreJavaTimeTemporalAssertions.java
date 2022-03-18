@@ -9,7 +9,6 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
@@ -25,14 +24,6 @@ public class MoreJavaTimeTemporalAssertions
 
     public static AbstractMoreTemporalAssert<?> assertMore(final Temporal actual) {
         return new MoreTemporalAssertImpl(actual);
-    }
-
-    public static AbstractMoreLocalDateAssert<?> assertMore(final LocalDate actual) {
-        return new MoreLocalDateAssertImpl(actual);
-    }
-
-    public static AbstractMoreLocalDateTimeAssert<?> assertMore(final LocalDateTime actual) {
-        return new MoreLocalDateTimeAssertImpl(actual);
     }
 
     // --------------------------------------------------------------------------------- java.time.temporal.TemporalUnit

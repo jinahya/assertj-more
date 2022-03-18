@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.more.java.time.temporal;
+package com.github.jinahya.assertj.more.java.time;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,11 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 class MoreLocalDateAssertImpl_AtTime_Test
-        extends MoreJavaTimeTemporalAssertTest<MoreLocalDateAssertImpl, LocalDate> {
-
-    MoreLocalDateAssertImpl_AtTime_Test() {
-        super(MoreLocalDateAssertImpl.class, LocalDate.class);
-    }
+        extends MoreLocalDateAssertImplTest {
 
     @Test
     void extractingAtTime__LocalTime() {

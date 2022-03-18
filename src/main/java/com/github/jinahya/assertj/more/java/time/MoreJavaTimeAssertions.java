@@ -5,8 +5,11 @@ import com.github.jinahya.assertj.more.AbstractMoreAssertions;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.Period;
+import java.time.ZonedDateTime;
 
 public class MoreJavaTimeAssertions
         extends AbstractMoreAssertions {
@@ -23,12 +26,24 @@ public class MoreJavaTimeAssertions
         return new MoreInstantAssertImpl(actual);
     }
 
+    public static AbstractMoreLocalDateAssert<?> assertMore(final LocalDate actual) {
+        return new MoreLocalDateAssertImpl(actual);
+    }
+
+    public static AbstractMoreLocalDateTimeAssert<?> assertMore(final LocalDateTime actual) {
+        return new MoreLocalDateTimeAssertImpl(actual);
+    }
+
     public static AbstractMoreOffsetDateTimeAssert<?> assertMore(final OffsetDateTime actual) {
         return new MoreOffsetDateTimeAssertImpl(actual);
     }
 
     public static AbstractMorePeriodAssert<?> assertMore(final Period actual) {
         return new MorePeriodAssertImpl(actual);
+    }
+
+    public static AbstractMoreZonedDateTimeAssert<?> assertMore(final ZonedDateTime actual) {
+        return new MoreZonedDateTimeAssertImpl(actual);
     }
 
     protected MoreJavaTimeAssertions() {

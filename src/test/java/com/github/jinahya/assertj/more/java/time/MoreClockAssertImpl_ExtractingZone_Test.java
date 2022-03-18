@@ -6,14 +6,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.Clock;
 import java.time.ZoneId;
 
-class MoreClockAssertImpl_HasZone_Test
+class MoreClockAssertImpl_ExtractingZone_Test
         extends MoreClockAssertImplTest {
 
     @MethodSource({"clockStream"})
     @ParameterizedTest
-    void hasZone__(final Clock actual) {
+    void extractingZone__(final Clock actual) {
         final MoreClockAssert<?, Clock> more = assertInstance(actual);
         final ZoneId expected = actual.getZone();
-        more.hasZone(expected);
+        more.extractingZone().isEqualTo(expected);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.jinahya.assertj.more.java.time.zone;
 
+import com.github.jinahya.assertj.more.hidden.ForAssert;
 import org.assertj.core.api.AbstractAssert;
 
 import java.time.ZoneId;
@@ -12,12 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * An abstract assert class for verifying values of {@link ZoneId}.
  *
- * @param <SELF>   self type parameter.
- * @param <ACTUAL> actual type parameter.
+ * @param <S> self type parameter.
+ * @param <A> actual type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
-public abstract class AbstractZoneIdAssert<SELF extends AbstractZoneIdAssert<SELF, ACTUAL>, ACTUAL extends ZoneId>
-        extends AbstractAssert<SELF, ACTUAL> {
+public abstract class AbstractZoneIdAssert<S extends AbstractZoneIdAssert<S, A>, A extends ZoneId>
+        extends AbstractAssert<S, A>
+        implements MoreZoneIdAssert<S, A> {
 
     /**
      * Creates a new instance with specified value and self type.
@@ -25,18 +27,18 @@ public abstract class AbstractZoneIdAssert<SELF extends AbstractZoneIdAssert<SEL
      * @param actual   the actual value to verify.
      * @param selfType the self type.
      */
-    protected AbstractZoneIdAssert(final ACTUAL actual, final Class<?> selfType) {
+    protected AbstractZoneIdAssert(final A actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 
     // - ------------------------------------------------------------------------------------------------- getId()String
-    protected <R> R getId(final Function<? super SELF, ? extends Function<? super String, ? extends R>> function) {
+    protected <R> R getId(final Function<? super S, ? extends Function<? super String, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.getId());
     }
 
-    public SELF hasId(final String expected) {
+    public S hasId(final String expected) {
         return getId(s -> v -> {
             assertThat(v).isEqualTo(expected);
             return s;
@@ -44,7 +46,7 @@ public abstract class AbstractZoneIdAssert<SELF extends AbstractZoneIdAssert<SEL
     }
 
     // --------------------------------------------------------------------------------------------- getRules()ZoneRules
-    protected <R> R getRules(final Function<? super SELF, ? extends Function<? super ZoneRules, ? extends R>> function) {
+    protected <R> R getRules(final Function<? super S, ? extends Function<? super ZoneRules, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.getRules());
@@ -55,13 +57,13 @@ public abstract class AbstractZoneIdAssert<SELF extends AbstractZoneIdAssert<SEL
     }
 
     // ---------------------------------------------------------------------------------------------- normalized()ZoneId
-    protected <R> R normalized(final Function<? super SELF, ? extends Function<? super ZoneId, ? extends R>> function) {
+    protected <R> R normalized(final Function<? super S, ? extends Function<? super ZoneId, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.normalized());
     }
 
     public AbstractZoneIdAssert<?, ZoneId> extractingNormalized() {
-        return normalized(s -> ZoneIdAssert::assertMore);
+        return ForAssert.applyNonNullActual1(isNotNull(), a -> MoreJavaTimeZoneAssertions.assertMore(a.normalized()));
     }
 }

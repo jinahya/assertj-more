@@ -1,11 +1,11 @@
-package com.github.jinahya.assertj.more.java.time.temporal;
+package com.github.jinahya.assertj.more.java.time;
 
 import java.time.LocalDate;
 
 class MoreLocalDateAssertImpl
         extends AbstractMoreLocalDateAssert<MoreLocalDateAssertImpl> {
 
-    MoreLocalDateAssertImpl(LocalDate actual) {
+    MoreLocalDateAssertImpl(final LocalDate actual) {
         super(actual, MoreLocalDateAssertImpl.class);
     }
 }

@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.more.java.time.chrono;
+package com.github.jinahya.assertj.more.java.time;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ComparableAssert;
@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 import java.time.chrono.ChronoZonedDateTime;
 
 class MoreZonedDateTimeAssertImpl_ComparableAssert_Test
-        extends MoreJavaTimeChronoAssertTest<MoreZonedDateTimeAssertImpl, ZonedDateTime> {
+        extends MoreJavaTimeAssertTest<MoreZonedDateTimeAssertImpl, ZonedDateTime> {
 
     MoreZonedDateTimeAssertImpl_ComparableAssert_Test() {
         super(MoreZonedDateTimeAssertImpl.class, ZonedDateTime.class);

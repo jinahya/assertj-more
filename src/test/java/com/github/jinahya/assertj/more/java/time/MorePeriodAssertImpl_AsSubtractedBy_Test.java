@@ -17,7 +17,7 @@ class MorePeriodAssertImpl_AsSubtractedBy_Test
         final Period actual = Period.of(0, 0, 0);
         final TemporalAmount amountToSubtract = Period.ofYears(1);
         final MorePeriodAssert<?> more = MoreJavaTimeAssertions.assertMore(actual);
-        more.asSubtractedBy(amountToSubtract)
-                .isEqualTo(actual.minus(amountToSubtract));
+//        more.asSubtractedBy(amountToSubtract)
+//                .isEqualTo(actual.minus(amountToSubtract));
     }
 }

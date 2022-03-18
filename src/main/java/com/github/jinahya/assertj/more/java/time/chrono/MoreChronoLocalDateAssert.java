@@ -7,7 +7,6 @@ import org.assertj.core.api.AbstractBooleanAssert;
 import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.AbstractStringAssert;
-import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 
 import java.time.LocalTime;
@@ -17,6 +16,8 @@ import java.time.chrono.ChronoPeriod;
 import java.time.chrono.Chronology;
 import java.time.chrono.Era;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -34,158 +35,224 @@ public interface MoreChronoLocalDateAssert<
                 MoreTemporalAssert<S, A>,
                 MoreTemporalAdjusterAssert<S, A> {
 
-    // --------------------------------------------------------------------------------------- getChronology()Chronology
-    default AbstractMoreChronologyAssert<?, Chronology> extractingChronology() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> MoreJavaTimeChronoAssertions.assertMore(a.getChronology()));
-    }
+    MoreChronoLocalDateTimeAssert<?, ? extends ChronoLocalDateTime<?>, ?> extractingAtTime(LocalTime localTime);
 
-    default S hasChronology(final Chronology expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.getChronology()).isEqualTo(expected);
-            return s;
-        });
-    }
-
-    // ----------------------------------------------------------------------------------------------------- getEra()Era
-    default AbstractMoreEraAssert<?, Era> extractingEra() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> MoreJavaTimeChronoAssertions.assertMore(a.getEra()));
-    }
-
-    default S hasEra(final Era expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.getEra()).isSameAs(expected);
-            return s;
-        });
-    }
-
-    // --------------------------------------------------------------------------------------------------- isLeapYear()Z
-    default AbstractBooleanAssert<?> extractingLeapYear() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.isLeapYear())
+    default AbstractStringAssert<?> extractingFormat(final DateTimeFormatter formatter) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.format(formatter))
         );
     }
 
-    default S isLeafYear(final Era expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.isLeapYear()).isTrue();
-            return s;
-        });
+    default AbstractMoreChronologyAssert<?, Chronology> extractingChronology() {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> MoreJavaTimeChronoAssertions.assertMore(a.getChronology())
+        );
     }
 
-    default S isNotLeafYear(final Era expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.isLeapYear()).isFalse();
-            return s;
-        });
+    default S hasChronology(final Chronology expected) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.getChronology())
+                            .isEqualTo(expected);
+                    return s;
+                }
+        );
     }
 
-    // ------------------------------------------------------------------------------------------------ lengthOfMonth()I
+    default AbstractMoreEraAssert<?, Era> extractingEra() {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> MoreJavaTimeChronoAssertions.assertMore(a.getEra())
+        );
+    }
+
+    default S hasEra(final Era expected) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.getEra())
+                            .isEqualTo(expected);
+                    return s;
+                }
+        );
+    }
+
+    default AbstractBooleanAssert<?> extractingIsAfter(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.isAfter(other))
+        );
+    }
+
+    default S isAfter(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isAfter(other)).isTrue();
+                    return s;
+                }
+        );
+    }
+
+    default S isNotAfter(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isAfter(other)).isFalse();
+                    return s;
+                }
+        );
+    }
+
+    default AbstractBooleanAssert<?> extractingIsBefore(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.isBefore(other))
+        );
+    }
+
+    default S isBefore(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isBefore(other)).isTrue();
+                    return s;
+                }
+        );
+    }
+
+    default S isNotBefore(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isBefore(other)).isFalse();
+                    return s;
+                }
+        );
+    }
+
+    default AbstractBooleanAssert<?> extractingIsEqual(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.isEqual(other))
+        );
+    }
+
+    default S isEqual(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isEqual(other)).isTrue();
+                    return s;
+                }
+        );
+    }
+
+    default S isNotEqual(final ChronoLocalDate other) {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isEqual(other)).isFalse();
+                    return s;
+                }
+        );
+    }
+
+    default AbstractBooleanAssert<?> extractingIsLeapYear() {
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.isLeapYear())
+        );
+    }
+
+    default S isLeapYear() {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    assertThat(a.isLeapYear()).isTrue();
+                    return s;
+                }
+        );
+    }
+
+    default S isNotLeapYear() {
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.isLeapYear()).isFalse();
+                    return s;
+                }
+        );
+    }
+
     default AbstractIntegerAssert<?> extractingLengthOfMonth() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.lengthOfMonth())
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.lengthOfMonth())
         );
     }
 
     default S hasLengthOfMonth(final int expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.lengthOfMonth()).isEqualTo(expected);
-            return s;
-        });
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.lengthOfMonth())
+                            .isEqualTo(expected);
+                    return s;
+                }
+        );
     }
 
-    // ------------------------------------------------------------------------------------------------ lengthOfYear()I
     default AbstractIntegerAssert<?> extractingLengthOfYear() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.lengthOfYear())
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.lengthOfYear())
         );
     }
 
     default S hasLengthOfYear(final int expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            assertThat(a.lengthOfYear()).isEqualTo(expected);
-            return s;
-        });
-    }
-
-    // ------------------------------------------------------------------------------ until(ChronoLocalDate)ChronoPeriod
-    default AbstractMoreChronoPeriodAssert<?, ChronoPeriod> extractingUntil(final ChronoLocalDate endDateExclusive) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> MoreJavaTimeChronoAssertions.assertMore(a.until(endDateExclusive))
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.lengthOfYear())
+                            .isEqualTo(expected);
+                    return s;
+                }
         );
     }
 
-    // --------------------------------------------------------------------------------- format(DateTimeFormatter)String
-    default AbstractStringAssert<?> extractingFormat(final DateTimeFormatter formatter) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.format(formatter))
-        );
-    }
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingMinus(long amountToSubtract, TemporalUnit unit);
 
-    // ---------------------------------------------------------------------------- atTime(LocalTime)ChronoLocalDateTime
-    Assert<?, ? extends ChronoLocalDateTime<?>> extractingAtTime(LocalTime localTime);
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingMinus(TemporalAmount amount);
 
-    // --------------------------------------------------------------------------------------------------- toEpochDay()J
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingPlus(long amountToAdd, TemporalUnit unit);
+
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingPlus(TemporalAmount amount);
+
     default AbstractLongAssert<?> extractingToEpochDay() {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.toEpochDay())
+        return ForAssert.applyNonNullActual1(
+                isNotNull(),
+                a -> Assertions.assertThat(a.toEpochDay())
         );
     }
 
     default S toEpochDayIsEqualsTo(final long expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            Assertions.assertThat(a.toEpochDay()).isEqualTo(expected);
-            return s;
-        });
+        return ForAssert.applyNonNullActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.toEpochDay())
+                            .isEqualTo(expected);
+                    return s;
+                }
+        );
     }
 
     default S hasEpochDay(final long expected) {
         return toEpochDayIsEqualsTo(expected);
     }
 
-    // --------------------------------------------------------------------------------------- isAfter(ChronoLocalDate)Z
-    default AbstractBooleanAssert<?> extractingIsAfter(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.isAfter(other))
-        );
-    }
-
-    default S isAfter(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> {
-                    Assertions.assertThat(a.isAfter(other)).isTrue();
-                    return s;
-                });
-    }
-
-    // -------------------------------------------------------------------------------------- isBefore(ChronoLocalDate)Z
-    default AbstractBooleanAssert<?> extractingIsBefore(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.isBefore(other))
-        );
-    }
-
-    default S isBefore(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> {
-                    Assertions.assertThat(a.isBefore(other)).isTrue();
-                    return s;
-                });
-    }
-
-    // --------------------------------------------------------------------------------------- isEqual(ChronoLocalDate)Z
-    default AbstractBooleanAssert<?> extractingIsEqual(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> Assertions.assertThat(a.isEqual(other))
-        );
-    }
-
-    default S isEqual(final ChronoLocalDate other) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this, s -> a -> {
-                    Assertions.assertThat(a.isEqual(other)).isTrue();
-                    return s;
-                });
-    }
+    MoreChronoPeriodAssert<?, ? extends ChronoPeriod> extractingUntil(ChronoLocalDate endDateExclusive);
 }

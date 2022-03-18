@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.more.java.time.chrono;
+package com.github.jinahya.assertj.more.java.time;
 
 import java.time.ZonedDateTime;
 

@@ -1,4 +1,4 @@
-package com.github.jinahya.assertj.more.java.time.temporal;
+package com.github.jinahya.assertj.more.java.time;
 
 import org.assertj.core.api.AbstractLocalDateAssert;
 
@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * @param <SELF> self type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public class AbstractMoreLocalDateAssert<SELF extends AbstractMoreLocalDateAssert<SELF>>
+public abstract class AbstractMoreLocalDateAssert<SELF extends AbstractMoreLocalDateAssert<SELF>>
         extends AbstractLocalDateAssert<SELF>
         implements MoreLocalDateAssert<SELF> {
 

@@ -7,11 +7,11 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 
 public interface MoreChronoLocalDateTimeAssert<
-        SELF extends MoreChronoLocalDateTimeAssert<SELF, ACTUAL, D>,
-        ACTUAL extends ChronoLocalDateTime<D>,
+        S extends MoreChronoLocalDateTimeAssert<S, A, D>,
+        A extends ChronoLocalDateTime<D>,
         D extends ChronoLocalDate>
-        extends MoreJavaTimeChronoAssert<SELF, ACTUAL>,
-                MoreTemporalAssert<SELF, ACTUAL>,
-                MoreTemporalAdjusterAssert<SELF, ACTUAL> {
+        extends MoreJavaTimeChronoAssert<S, A>,
+                MoreTemporalAssert<S, A>,
+                MoreTemporalAdjusterAssert<S, A> {
 
 }
