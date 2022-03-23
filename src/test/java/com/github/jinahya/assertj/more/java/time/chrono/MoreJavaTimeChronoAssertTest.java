@@ -2,10 +2,10 @@ package com.github.jinahya.assertj.more.java.time.chrono;
 
 import com.github.jinahya.assertj.more.MoreAssertTest;
 
-abstract class MoreJavaTimeChronoAssertTest<ASSERT extends MoreJavaTimeChronoAssert<ASSERT, ACTUAL>, ACTUAL>
-        extends MoreAssertTest<ASSERT, ACTUAL> {
+abstract class MoreJavaTimeChronoAssertTest<S extends MoreJavaTimeChronoAssert<S, A>, A>
+        extends MoreAssertTest<S, A> {
 
-    protected MoreJavaTimeChronoAssertTest(final Class<ASSERT> assertClass, final Class<ACTUAL> actualClass) {
+    protected MoreJavaTimeChronoAssertTest(final Class<S> assertClass, final Class<A> actualClass) {
         super(assertClass, actualClass);
     }
 }

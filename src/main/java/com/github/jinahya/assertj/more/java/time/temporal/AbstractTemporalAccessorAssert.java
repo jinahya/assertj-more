@@ -20,16 +20,16 @@ import java.util.function.Function;
 /**
  * An abstract assert class for verifying values of {@link TemporalAccessor}.
  *
- * @param <SELF>   self type parameter.
- * @param <ACTUAL> actual type parameter.
+ * @param <S> self type parameter.
+ * @param <A> actual type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
 @Deprecated
 abstract class AbstractTemporalAccessorAssert<
-        SELF extends AbstractTemporalAccessorAssert<SELF, ACTUAL>,
-        ACTUAL extends TemporalAccessor
+        S extends AbstractTemporalAccessorAssert<S, A>,
+        A extends TemporalAccessor
         >
-        extends AbstractAssert<SELF, ACTUAL> {
+        extends AbstractAssert<S, A> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -37,7 +37,7 @@ abstract class AbstractTemporalAccessorAssert<
      * @param actual   the actual value to verify.
      * @param selfType the self type.
      */
-    protected AbstractTemporalAccessorAssert(final ACTUAL actual, final Class<?> selfType) {
+    protected AbstractTemporalAccessorAssert(final A actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 
@@ -52,7 +52,7 @@ abstract class AbstractTemporalAccessorAssert<
      * @return the result of the {@code function}.
      */
     protected <R> R get(final TemporalField field,
-                        final Function<? super SELF, ? extends Function<? super Integer, ? extends R>> function) {
+                        final Function<? super S, ? extends Function<? super Integer, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.get(field));
@@ -78,7 +78,7 @@ abstract class AbstractTemporalAccessorAssert<
      * @return {@link #myself}.
      * @see TemporalAccessor#get(TemporalField)
      */
-    public SELF has(final TemporalField field, final int expected) {
+    public S has(final TemporalField field, final int expected) {
         return get(field, s -> v -> {
             Assertions.assertThat(v).isEqualTo(expected);
             return s;
@@ -91,7 +91,7 @@ abstract class AbstractTemporalAccessorAssert<
                 .extracting(a -> a.getLong(field), InstanceOfAssertFactories.LONG);
     }
 
-    public SELF hasLong(final TemporalField field, final long expected) {
+    public S hasLong(final TemporalField field, final long expected) {
         return isNotNull()
                 .satisfies(a -> {
                     Assertions.assertThat(a.getLong(field))
@@ -102,20 +102,20 @@ abstract class AbstractTemporalAccessorAssert<
     // -------------------------------------------------------------------------------------------------- isSupported()Z
     protected <R> R isSupported(
             final TemporalField field,
-            final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
+            final Function<? super S, ? extends Function<? super Boolean, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.isSupported(field));
     }
 
-    public SELF supports(final TemporalField field) {
+    public S supports(final TemporalField field) {
         return isSupported(field, s -> v -> {
             Assertions.assertThat(v).isTrue();
             return s;
         });
     }
 
-    public SELF doesNotSupport(final TemporalField field) {
+    public S doesNotSupport(final TemporalField field) {
         return isSupported(field, s -> v -> {
             Assertions.assertThat(v).isFalse();
             return s;
@@ -124,7 +124,7 @@ abstract class AbstractTemporalAccessorAssert<
 
     // ---------------------------------------------------------------------------------------- query(TemporalQuery<R>)R
     protected <R, T> T query(final TemporalQuery<R> query,
-                             final Function<? super SELF, ? extends Function<? super R, ? extends T>> function) {
+                             final Function<? super S, ? extends Function<? super R, ? extends T>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.query(query));
@@ -150,7 +150,7 @@ abstract class AbstractTemporalAccessorAssert<
         return extractingQueryResultCreating(query, Assertions::assertThat);
     }
 
-    public <R> SELF queryResultSatisfies(final TemporalQuery<R> query, final Consumer<? super R> consumer) {
+    public <R> S queryResultSatisfies(final TemporalQuery<R> query, final Consumer<? super R> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
         return isNotNull()
                 .satisfies(a -> {
@@ -161,7 +161,7 @@ abstract class AbstractTemporalAccessorAssert<
 
     // ---------------------------------------------------------------------------------- range(TemporalField)ValueRange
     protected <R> R range(final TemporalField field,
-                          final Function<? super SELF, ? extends Function<? super ValueRange, ? extends R>> function) {
+                          final Function<? super S, ? extends Function<? super ValueRange, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
                 .apply(actual.range(field));

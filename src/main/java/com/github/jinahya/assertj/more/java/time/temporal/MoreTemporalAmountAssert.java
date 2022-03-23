@@ -1,5 +1,6 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
+import com.github.jinahya.assertj.more.hidden.ForAssert;
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ListAssert;
@@ -8,30 +9,35 @@ import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 
-public interface MoreTemporalAmountAssert<
-        SELF extends MoreTemporalAmountAssert<SELF, ACTUAL>,
-        ACTUAL extends TemporalAmount>
-        extends MoreJavaTimeTemporalAssert<SELF, ACTUAL> {
+public interface MoreTemporalAmountAssert<S extends MoreTemporalAmountAssert<S, A>, A extends TemporalAmount>
+        extends MoreJavaTimeTemporalAssert<S, A> {
 
     // ----------------------------------------------------------------------------------------- addTo(Temporal)Temporal
-    @SuppressWarnings({"unchecked"})
-    default AbstractMoreTemporalAssert<?> extractingAddTo(final Temporal temporal) {
-        return MoreTemporalAmountAssertHelper.addTo(temporal, (SELF) this, s -> MoreTemporalAssertImpl::new);
+    default AbstractMoreTemporalAssert<?, Temporal> extractingAddTo(final Temporal temporal) {
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreJavaTimeTemporalAssertions.assertMore(a.addTo(temporal))
+        );
     }
 
-    // ---------------------------------------------------------------------------------------------- get(TemporalUnit)J
     default AbstractLongAssert<?> extracting(final TemporalUnit unit) {
-        return MoreTemporalAmountAssertHelper.get(unit, (SELF) this, s -> Assertions::assertThat);
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> Assertions.assertThat(a.get(unit))
+        );
     }
 
-    // ------------------------------------------------------------------------------------ getUnits()List<TemporalUnit>
-    default ListAssert<TemporalUnit> extractingUnits(final TemporalUnit unit) {
-        return MoreTemporalAmountAssertHelper.getUnits(unit, (SELF) this, s -> Assertions::assertThat);
+    default ListAssert<TemporalUnit> extractingUnits() {
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> Assertions.assertThat(a.getUnits())
+        );
     }
 
-    // ----------------------------------------------------------------------------------------- addTo(Temporal)Temporal
-    @SuppressWarnings({"unchecked"})
-    default AbstractMoreTemporalAssert<?> extractingSubtractTo(final Temporal temporal) {
-        return MoreTemporalAmountAssertHelper.subtractFrom(temporal, (SELF) this, s -> MoreTemporalAssertImpl::new);
+    default AbstractMoreTemporalAssert<?, Temporal> extractingSubtractFrom(final Temporal temporal) {
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreJavaTimeTemporalAssertions.assertMore(a.subtractFrom(temporal))
+        );
     }
 }

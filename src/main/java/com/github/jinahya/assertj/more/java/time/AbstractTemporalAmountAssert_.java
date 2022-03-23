@@ -10,11 +10,11 @@ import java.util.function.Function;
 /**
  * An abstract assert class for verifying values of {@link Duration}.
  *
- * @param <SELF> self type parameter.
+ * @param <S> self type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
-abstract class AbstractTemporalAmountAssert_<SELF extends AbstractTemporalAmountAssert_<SELF, ACTUAL>, ACTUAL extends TemporalAmount>
-        extends AbstractMoreTemporalAmountAssert<SELF, ACTUAL> {
+abstract class AbstractTemporalAmountAssert_<S extends AbstractTemporalAmountAssert_<S, A>, A extends TemporalAmount>
+        extends AbstractMoreTemporalAmountAssert<S, A> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -22,13 +22,13 @@ abstract class AbstractTemporalAmountAssert_<SELF extends AbstractTemporalAmount
      * @param actual   the actual value to verify.
      * @param selfType the self type.
      */
-    protected AbstractTemporalAmountAssert_(final ACTUAL actual, final Class<?> selfType, final Class<ACTUAL> actualType) {
+    protected AbstractTemporalAmountAssert_(final A actual, final Class<?> selfType, final Class<A> actualType) {
         super(actual, selfType);
         this.actualType = Objects.requireNonNull(actualType, "actualType is null");
     }
 
     // ---------------------------------------------------------------------------------------------- minusDays(J)ACTUAL
-    private ACTUAL minusDays(final long daysToSubtract) {
+    private A minusDays(final long daysToSubtract) {
         try {
             return actualType.cast(
                     actualType.getMethod("minusDays", long.class)
@@ -41,7 +41,7 @@ abstract class AbstractTemporalAmountAssert_<SELF extends AbstractTemporalAmount
 
     protected <R> R minusDays(
             long daysToSubtract,
-            final Function<? super SELF, ? extends Function<? super ACTUAL, ? extends R>> function) {
+            final Function<? super S, ? extends Function<? super A, ? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(minusDays(daysToSubtract));
     }
@@ -66,5 +66,5 @@ abstract class AbstractTemporalAmountAssert_<SELF extends AbstractTemporalAmount
 //    }
 
     // -----------------------------------------------------------------------------------------------------------------
-    protected final Class<ACTUAL> actualType;
+    protected final Class<A> actualType;
 }

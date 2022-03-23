@@ -7,15 +7,15 @@ import java.time.temporal.TemporalAmount;
 /**
  * An abstract assert class for verifying values of {@link TemporalAmount}.
  *
- * @param <SELF>   self type parameter.
- * @param <ACTUAL> actual type parameter.
+ * @param <S> self type parameter.
+ * @param <A> actual type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
 public abstract class AbstractMoreTemporalAmountAssert<
-        SELF extends AbstractMoreTemporalAmountAssert<SELF, ACTUAL>,
-        ACTUAL extends TemporalAmount>
-        extends AbstractAssert<SELF, ACTUAL>
-        implements MoreTemporalAmountAssert<SELF, ACTUAL> {
+        S extends AbstractMoreTemporalAmountAssert<S, A>,
+        A extends TemporalAmount>
+        extends AbstractAssert<S, A>
+        implements MoreTemporalAmountAssert<S, A> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -23,7 +23,7 @@ public abstract class AbstractMoreTemporalAmountAssert<
      * @param actual   the actual value to verify.
      * @param selfType the self type.
      */
-    protected AbstractMoreTemporalAmountAssert(final ACTUAL actual, final Class<?> selfType) {
+    protected AbstractMoreTemporalAmountAssert(final A actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 }

@@ -21,8 +21,6 @@ import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 /**
  * An interface for verifying values of {@link ChronoLocalDate} interface.
  *
@@ -57,7 +55,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.getChronology())
+                    Assertions.assertThat(a.getChronology())
                             .isEqualTo(expected);
                     return s;
                 }
@@ -75,7 +73,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.getEra())
+                    Assertions.assertThat(a.getEra())
                             .isEqualTo(expected);
                     return s;
                 }
@@ -93,7 +91,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isAfter(other)).isTrue();
+                    Assertions.assertThat(a.isAfter(other)).isTrue();
                     return s;
                 }
         );
@@ -103,7 +101,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isAfter(other)).isFalse();
+                    Assertions.assertThat(a.isAfter(other)).isFalse();
                     return s;
                 }
         );
@@ -120,7 +118,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isBefore(other)).isTrue();
+                    Assertions.assertThat(a.isBefore(other)).isTrue();
                     return s;
                 }
         );
@@ -130,7 +128,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isBefore(other)).isFalse();
+                    Assertions.assertThat(a.isBefore(other)).isFalse();
                     return s;
                 }
         );
@@ -147,7 +145,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isEqual(other)).isTrue();
+                    Assertions.assertThat(a.isEqual(other)).isTrue();
                     return s;
                 }
         );
@@ -157,7 +155,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isEqual(other)).isFalse();
+                    Assertions.assertThat(a.isEqual(other)).isFalse();
                     return s;
                 }
         );
@@ -174,7 +172,7 @@ public interface MoreChronoLocalDateAssert<
         return ForAssert.applyNonNullActual2(
                 isNotNull(),
                 s -> a -> {
-                    assertThat(a.isLeapYear()).isTrue();
+                    Assertions.assertThat(a.isLeapYear()).isTrue();
                     return s;
                 }
         );

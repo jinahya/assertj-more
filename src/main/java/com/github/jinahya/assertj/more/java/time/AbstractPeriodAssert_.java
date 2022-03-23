@@ -11,11 +11,11 @@ import java.util.function.Function;
 /**
  * An abstract assert class for verifying values of {@link Period}.
  *
- * @param <SELF> self type parameter.
+ * @param <S> self type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
-public abstract class AbstractPeriodAssert_<SELF extends AbstractPeriodAssert_<SELF>>
-        extends AbstractTemporalAmountAssert_<SELF, Period> {
+public abstract class AbstractPeriodAssert_<S extends AbstractPeriodAssert_<S>>
+        extends AbstractTemporalAmountAssert_<S, Period> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -29,7 +29,7 @@ public abstract class AbstractPeriodAssert_<SELF extends AbstractPeriodAssert_<S
 
     // --------------------------------------------------------------------------------------- getChronology()Chronology
     protected <R> R getChronology(
-            final Function<? super SELF, ? extends Function<? super Chronology, ? extends R>> function) {
+            final Function<? super S, ? extends Function<? super Chronology, ? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(actual.getChronology());
     }
@@ -41,7 +41,7 @@ public abstract class AbstractPeriodAssert_<SELF extends AbstractPeriodAssert_<S
     // ------------------------------------------------------------------------------------------- multipliedBy(I)Period
     protected <R> R multipliedBy(
             final int scalar,
-            final Function<? super SELF, ? extends Function<? super Period, ? extends R>> function) {
+            final Function<? super S, ? extends Function<? super Period, ? extends R>> function) {
         return ChronoPeriodAssertHelper.multipliedBy(isNotNull(), actual, scalar, function);
     }
 }

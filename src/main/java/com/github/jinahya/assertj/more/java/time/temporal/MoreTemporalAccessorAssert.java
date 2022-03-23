@@ -18,8 +18,6 @@ import java.time.temporal.ValueRange;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert<S, A>, A extends TemporalAccessor>
         extends MoreJavaTimeTemporalAssert<S, A> {
 
@@ -35,12 +33,8 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      * @see #supports(TemporalField)
      * @see #doesNotSupport(TemporalField)
      */
-    @SuppressWarnings({"unchecked"})
     default AbstractBooleanAssert<?> extractingIsSupported(final TemporalField field) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this,
-                s -> a -> Assertions.assertThat(a.isSupported(field))
-        );
+        return ForAssert.applyActual2(isNotNull(), s -> a -> Assertions.assertThat(a.isSupported(field)));
     }
 
     /**
@@ -51,9 +45,8 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      * @see TemporalAccessor#isSupported(TemporalField)
      * @see #doesNotSupport(TemporalField)
      */
-    @SuppressWarnings({"unchecked"})
     default S supports(final TemporalField field) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
+        return ForAssert.applyActual2(isNotNull(), s -> a -> {
             Assertions.assertThat(a.isSupported(field)).isTrue();
             return s;
         });
@@ -67,9 +60,8 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      * @see TemporalAccessor#isSupported(TemporalField)
      * @see #supports(TemporalField)
      */
-    @SuppressWarnings({"unchecked"})
     default S doesNotSupport(final TemporalField field) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
+        return ForAssert.applyActual2(isNotNull(), s -> a -> {
             Assertions.assertThat(a.isSupported(field)).isFalse();
             return s;
         });
@@ -168,7 +160,7 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      */
     default S hasLong(final TemporalField field, final long expected) {
         return MoreTemporalAccessorAssertHelper.getLong(field, supports(field), s -> r -> {
-            assertThat(r).isEqualTo(expected);
+            Assertions.assertThat(r).isEqualTo(expected);
             return s;
         });
     }

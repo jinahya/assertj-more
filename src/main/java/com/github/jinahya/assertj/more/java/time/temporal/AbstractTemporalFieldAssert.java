@@ -11,15 +11,14 @@ import java.util.function.Function;
 /**
  * An abstract assert class for verifying values of {@link TemporalField}.
  *
- * @param <SELF>   self type parameter.
- * @param <ACTUAL> actual type parameter.
+ * @param <S> self type parameter.
+ * @param <A> actual type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
 public abstract class AbstractTemporalFieldAssert<
-        SELF extends AbstractTemporalFieldAssert<SELF, ACTUAL>,
-        ACTUAL extends TemporalField
-        >
-        extends AbstractAssert<SELF, ACTUAL> {
+        S extends AbstractTemporalFieldAssert<S, A>,
+        A extends TemporalField>
+        extends AbstractAssert<S, A> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -27,14 +26,14 @@ public abstract class AbstractTemporalFieldAssert<
      * @param actual   the actual value to verify.
      * @param selfType the self type.
      */
-    protected AbstractTemporalFieldAssert(final ACTUAL actual, final Class<?> selfType) {
+    protected AbstractTemporalFieldAssert(final A actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 
     // ---------------------------------------------------------------------------------- adjustInto(Temporal,J)Temporal
     protected <R extends Temporal, U> U adjustInto(
             final R temporal, final long newValue,
-            final Function<? super SELF, ? extends Function<? super R, ? extends U>> function) {
+            final Function<? super S, ? extends Function<? super R, ? extends U>> function) {
         return function.apply(isNotNull())
                 .apply(actual.adjustInto(temporal, newValue));
     }

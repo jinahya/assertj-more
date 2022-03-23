@@ -25,11 +25,11 @@ public final class ForAbstractAssert {
     }
 
     @SuppressWarnings({"unchecked"})
-    public static <ACTUAL> ACTUAL getActual(final AbstractAssert<?, ACTUAL> self) {
+    public static <A> A getActual(final AbstractAssert<?, A> self) {
         Objects.requireNonNull(self, "self is null");
         try {
             //return (ACTUAL) FIELD_ACTUAL.get(self);
-            return (ACTUAL) HANDLE_ACTUAL.invoke(self);
+            return (A) HANDLE_ACTUAL.invoke(self);
         } catch (final Throwable t) {
             throw new RuntimeException(t);
         }

@@ -22,25 +22,31 @@ public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extend
 
     // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
     default S supports(final TemporalUnit unit) {
-        return MoreTemporalAssertHelper.extractingIsSupported(unit, (S) this, s -> a -> {
-            a.isTrue();
+        return ForAssert.applyActual2(isNotNull(), s -> a -> {
+            Assertions.assertThat(a.isSupported(unit))
+                    .isTrue();
             return s;
         });
     }
 
     default S doesNotSupport(final TemporalUnit unit) {
-        return MoreTemporalAssertHelper.extractingIsSupported(unit, (S) this, s -> a -> {
-            a.isFalse();
+        return ForAssert.applyActual2(isNotNull(), s -> a -> {
+            Assertions.assertThat(a.isSupported(unit))
+                    .isFalse();
             return s;
         });
     }
 
+    // ----------------------------------------------------------------------------------- minus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingMinus(long amountToSubtract, TemporalUnit unit);
 
+    // ----------------------------------------------------------------------------------- minus(TemporalAmount)Temporal
     MoreTemporalAssert<?, A> extractingMinus(TemporalAmount amount);
 
+    // ------------------------------------------------------------------------------------ plus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingPlus(long amountToAdd, TemporalUnit unit);
 
+    // ------------------------------------------------------------------------------------ plus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingPlus(TemporalAmount amount);
 
     //    default MoreTemporalAssert<?, Temporal> extractingMinus(final long amountToSubtract, final TemporalUnit unit) {

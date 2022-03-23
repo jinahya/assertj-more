@@ -2,7 +2,7 @@ package com.github.jinahya.assertj.more.java.time.temporal;
 
 import com.github.jinahya.assertj.more.MoreAssert;
 
-interface MoreJavaTimeTemporalAssert<SELF extends MoreJavaTimeTemporalAssert<SELF, ACTUAL>, ACTUAL>
-        extends MoreAssert<SELF, ACTUAL> {
+interface MoreJavaTimeTemporalAssert<S extends MoreJavaTimeTemporalAssert<S, A>, A>
+        extends MoreAssert<S, A> {
 
 }

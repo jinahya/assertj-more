@@ -22,9 +22,12 @@ public class MoreJavaTimeTemporalAssertions
         return new MoreTemporalAccessorAssertImpl(actual);
     }
 
-//    public static AbstractMoreTemporalAssert<?> assertMore(final Temporal actual) {
+    //    public static AbstractMoreTemporalAssert<?> assertMore(final Temporal actual) {
 //        return new MoreTemporalAssertImpl(actual);
 //    }
+    public static AbstractMoreTemporalAssert<?, Temporal> assertMore(final Temporal actual) {
+        return new MoreTemporalAssertImpl(actual);
+    }
 
     // --------------------------------------------------------------------------------- java.time.temporal.TemporalUnit
     public static AbstractMoreTemporalUnitAssert<?, TemporalUnit> assertMore(final TemporalUnit actual) {
@@ -37,9 +40,9 @@ public class MoreJavaTimeTemporalAssertions
 
     // -----------------------------------------------------------------------------------------------------------------
     public static <
-            ASSERT extends Assert<ASSERT, ACTUAL> & MoreJavaTimeTemporalAssert<ASSERT, ACTUAL>,
-            ACTUAL extends Temporal>
-    ASSERT assertMore(final ACTUAL actual, final Class<ACTUAL> type) {
+            S extends Assert<S, A> & MoreJavaTimeTemporalAssert<S, A>,
+            A extends Temporal>
+    S assertMore(final A actual, final Class<A> type) {
         try {
             Assertions.assertThat(LocalDate.now());
             final MethodHandle handle = MethodHandles.lookup().findStatic(
@@ -52,7 +55,7 @@ public class MoreJavaTimeTemporalAssertions
                         .make()
                         .load(MoreJavaTimeTemporalAssertions.class.getClassLoader())
                         .getLoaded();
-                return (ASSERT) more.getConstructor(type).newInstance(actual);
+                return (S) more.getConstructor(type).newInstance(actual);
             } catch (final Throwable t) {
                 throw new RuntimeException(t);
             }

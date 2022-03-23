@@ -68,7 +68,6 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         );
     }
 
-    // ------------------------------------------------------------------------------------------------ getDayOfMonth()I
     default AbstractIntegerAssert<?> extractingDayOfMonth() {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
@@ -76,37 +75,26 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasDayOfMonth(final int expected) {
-        return ForAssert.applyNonNullActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.getDayOfMonth())
-                            .isEqualTo(expected);
-                    return s;
-                }
-        );
+        extractingDayOfMonth().isEqualTo(expected);
+        return (S) this;
     }
 
-    // ----------------------------------------------------------------------------------------- getDayOfWeek()DayOfWeek
     default AbstractComparableAssert<?, DayOfWeek> extractingDayOfWeek() {
-        return ForAssert.applyNonNullActual1(
+        return ForAssert.applyActual2(
                 isNotNull(),
-                a -> Assertions.assertThat(a.getDayOfWeek())
+                s -> a -> (AbstractComparableAssert<?, DayOfWeek>) Assertions.assertThat(a.getDayOfWeek())
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasDayOfWeek(final DayOfWeek expected) {
-        return ForAssert.applyNonNullActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.getDayOfWeek())
-                            .isEqualTo(expected);
-                    return s;
-                }
-        );
+        extractingDayOfWeek()
+                .isEqualTo(expected);
+        return (S) this;
     }
 
-    // ------------------------------------------------------------------------------------------------- getDayOfYear()I
     default AbstractIntegerAssert<?> extractingDayOfYear() {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
@@ -114,37 +102,28 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasDayOfYear(final int expected) {
-        return ForAssert.applyNonNullActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.getDayOfYear())
-                            .isEqualTo(expected);
-                    return s;
-                }
-        );
+        extractingDayOfYear()
+                .isEqualTo(expected);
+        return (S) this;
     }
 
-    // ----------------------------------------------------------------------------------------------------- getMonth()I
     default AbstractComparableAssert<?, Month> extractingMonth() {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
-                a -> Assertions.assertThat(a.getMonth())
+                a -> (AbstractComparableAssert<?, Month>) Assertions.assertThat(a.getMonth())
+
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasMonth(final Month expected) {
-        return ForAssert.applyNonNullActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.getMonth())
-                            .isEqualTo(expected);
-                    return s;
-                }
-        );
+        extractingMonth()
+                .isSameAs(expected);
+        return (S) this;
     }
 
-    // ------------------------------------------------------------------------------------------------ getMonthValue()I
     default AbstractIntegerAssert<?> extractingMonthValue() {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
@@ -152,18 +131,13 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasMonthValue(final int expected) {
-        return ForAssert.applyNonNullActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.getMonthValue())
-                            .isEqualTo(expected);
-                    return s;
-                }
-        );
+        extractingMonthValue()
+                .isEqualTo(expected);
+        return (S) this;
     }
 
-    // ------------------------------------------------------------------------------------------------------ getYear()I
     default AbstractIntegerAssert<?> extractingYear() {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
@@ -171,30 +145,36 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
         );
     }
 
+    @SuppressWarnings({"unchecked"})
     default S hasYear(final int expected) {
-        return ForAssert.applyNonNullActual2(
+        extractingYear()
+                .isEqualTo(expected);
+        return (S) this;
+    }
+
+    @Override
+    default AbstractMoreLocalDateAssert<?> extractingMinus(long amountToSubtract, TemporalUnit unit) {
+        return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> {
-                    Assertions.assertThat(a.getYear())
-                            .isEqualTo(expected);
-                    return s;
+                    final LocalDate[] results = new LocalDate[1];
+                    Assertions.assertThatCode(() -> results[0] = a.minus(amountToSubtract, unit))
+                            .doesNotThrowAnyException();
+                    return MoreJavaTimeAssertions.assertMore(results[0]);
                 }
         );
     }
 
     @Override
-    default AbstractMoreLocalDateAssert<?> extractingMinus(long amountToSubtract, TemporalUnit unit) {
-        return ForAssert.applyNonNullActual1(
-                isNotNull(),
-                a -> MoreJavaTimeAssertions.assertMore(a.minus(amountToSubtract, unit))
-        );
-    }
-
-    @Override
     default AbstractMoreLocalDateAssert<?> extractingMinus(final TemporalAmount amount) {
-        return ForAssert.applyNonNullActual1(
+        return ForAssert.applyActual2(
                 isNotNull(),
-                a -> MoreJavaTimeAssertions.assertMore(a.minus(amount))
+                s -> a -> {
+                    final LocalDate[] results = new LocalDate[1];
+                    Assertions.assertThatCode(() -> results[0] = a.minus(amount))
+                            .doesNotThrowAnyException();
+                    return MoreJavaTimeAssertions.assertMore(results[0]);
+                }
         );
     }
 

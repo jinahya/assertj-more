@@ -4,8 +4,8 @@ import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAmountAsse
 
 import java.time.Duration;
 
-public interface MoreDurationAssert<SELF extends MoreDurationAssert<SELF>>
-        extends MoreJavaTimeAssert<SELF, Duration>,
-                MoreTemporalAmountAssert<SELF, Duration> {
+public interface MoreDurationAssert<S extends MoreDurationAssert<S>>
+        extends MoreJavaTimeAssert<S, Duration>,
+                MoreTemporalAmountAssert<S, Duration> {
 
 }

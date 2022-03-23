@@ -7,12 +7,12 @@ import java.time.Duration;
 /**
  * An abstract assert class for verifying values of {@link Duration}.
  *
- * @param <SELF> self type parameter.
+ * @param <S> self type parameter.
  * @author Jin Kwon &lt;onacit_at_wemakeprice.com&gt;
  */
-public abstract class AbstractMoreDurationAssert<SELF extends AbstractMoreDurationAssert<SELF>>
-        extends AbstractDurationAssert<SELF>
-        implements MoreDurationAssert<SELF> {
+public abstract class AbstractMoreDurationAssert<S extends AbstractMoreDurationAssert<S>>
+        extends AbstractDurationAssert<S>
+        implements MoreDurationAssert<S> {
 
     /**
      * Creates a new instance with specified actual value and self type.

@@ -4,11 +4,11 @@ import org.assertj.core.api.AbstractAssert;
 
 import java.time.chrono.Era;
 
-public abstract class AbstractMoreEraAssert<SELF extends AbstractMoreEraAssert<SELF, ACTUAL>, ACTUAL extends Era>
-        extends AbstractAssert<SELF, ACTUAL>
-        implements MoreEraAssert<SELF, ACTUAL> {
+public abstract class AbstractMoreEraAssert<S extends AbstractMoreEraAssert<S, ACTUAL>, ACTUAL extends Era>
+        extends AbstractAssert<S, ACTUAL>
+        implements MoreEraAssert<S, ACTUAL> {
 
-    protected AbstractMoreEraAssert(final ACTUAL actual, final Class<SELF> selfType) {
+    protected AbstractMoreEraAssert(final ACTUAL actual, final Class<S> selfType) {
         super(actual, selfType);
     }
 }

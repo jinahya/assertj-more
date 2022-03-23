@@ -7,12 +7,12 @@ import java.time.LocalDate;
 /**
  * An extended {@link AbstractLocalDateAssert} implements {@link MoreLocalDateAssertImpl} interface.
  *
- * @param <SELF> self type parameter
+ * @param <S> self type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public abstract class AbstractMoreLocalDateAssert<SELF extends AbstractMoreLocalDateAssert<SELF>>
-        extends AbstractLocalDateAssert<SELF>
-        implements MoreLocalDateAssert<SELF> {
+public abstract class AbstractMoreLocalDateAssert<S extends AbstractMoreLocalDateAssert<S>>
+        extends AbstractLocalDateAssert<S>
+        implements MoreLocalDateAssert<S> {
 
     /**
      * Creates a new instance with specified actual.
@@ -20,7 +20,7 @@ public abstract class AbstractMoreLocalDateAssert<SELF extends AbstractMoreLocal
      * @param actual   the actual.
      * @param selfType self type.
      */
-    protected AbstractMoreLocalDateAssert(final LocalDate actual, Class<SELF> selfType) {
+    protected AbstractMoreLocalDateAssert(final LocalDate actual, Class<S> selfType) {
         super(actual, selfType);
     }
 }

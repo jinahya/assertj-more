@@ -3,17 +3,17 @@ package org.assertj.core.api;
 import java.lang.reflect.Constructor;
 import java.util.Objects;
 
-public abstract class AssertTest<ASSERT extends Assert<ASSERT, ACTUAL>, ACTUAL> {
+public abstract class AssertTest<S extends Assert<S, A>, A> {
 
-    protected AssertTest(final Class<ASSERT> assertClass, final Class<ACTUAL> actualClass) {
+    protected AssertTest(final Class<S> assertClass, final Class<A> actualClass) {
         super();
         this.assertClass = Objects.requireNonNull(assertClass, "assertClass is null");
         this.actualClass = Objects.requireNonNull(actualClass, "actualClass is null");
     }
 
-    protected ASSERT assertInstance(final ACTUAL actual) {
+    protected S assertInstance(final A actual) {
         try {
-            final Constructor<ASSERT> constructor = assertClass.getConstructor(actualClass);
+            final Constructor<S> constructor = assertClass.getConstructor(actualClass);
             if (!constructor.isAccessible()) {
                 constructor.setAccessible(true);
             }
@@ -23,7 +23,7 @@ public abstract class AssertTest<ASSERT extends Assert<ASSERT, ACTUAL>, ACTUAL> 
         }
     }
 
-    protected final Class<ASSERT> assertClass;
+    protected final Class<S> assertClass;
 
-    protected final Class<ACTUAL> actualClass;
+    protected final Class<A> actualClass;
 }

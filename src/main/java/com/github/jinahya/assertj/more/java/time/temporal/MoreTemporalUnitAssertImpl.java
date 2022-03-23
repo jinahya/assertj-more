@@ -6,6 +6,6 @@ class MoreTemporalUnitAssertImpl
         extends AbstractMoreTemporalUnitAssert<MoreTemporalUnitAssertImpl, TemporalUnit> {
 
     MoreTemporalUnitAssertImpl(final TemporalUnit actual) {
-        super(actual, MoreTemporalAssertImpl.class);
+        super(actual, MoreTemporalUnitAssertImpl.class);
     }
 }

@@ -4,11 +4,11 @@ import org.assertj.core.api.AbstractInstantAssert;
 
 import java.time.Instant;
 
-public abstract class AbstractMoreInstantAssert<SELF extends AbstractMoreInstantAssert<SELF>>
-        extends AbstractInstantAssert<SELF>
-        implements MoreInstantAssert<SELF> {
+public abstract class AbstractMoreInstantAssert<S extends AbstractMoreInstantAssert<S>>
+        extends AbstractInstantAssert<S>
+        implements MoreInstantAssert<S> {
 
-    protected AbstractMoreInstantAssert(final Instant actual, final Class<SELF> selfType) {
+    protected AbstractMoreInstantAssert(final Instant actual, final Class<S> selfType) {
         super(actual, selfType);
     }
 }

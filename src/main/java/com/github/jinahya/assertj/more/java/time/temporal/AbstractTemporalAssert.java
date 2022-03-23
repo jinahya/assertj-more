@@ -13,20 +13,17 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.LongFunction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * An abstract class for verifying instances of {@link Temporal} interface.
  *
- * @param <SELF>   self type parameter
- * @param <ACTUAL> actual type parameter
+ * @param <S> self type parameter
+ * @param <A> actual type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
 public abstract class AbstractTemporalAssert<
-        SELF extends AbstractTemporalAssert<SELF, ACTUAL>,
-        ACTUAL extends Temporal
-        >
-        extends AbstractAssert<SELF, ACTUAL> {
+        S extends AbstractTemporalAssert<S, A>,
+        A extends Temporal>
+        extends AbstractAssert<S, A> {
 
     /**
      * Creates a new instance with specified actual value and self type.
@@ -34,14 +31,14 @@ public abstract class AbstractTemporalAssert<
      * @param actual   the actual value.
      * @param selfType the self type.
      */
-    protected AbstractTemporalAssert(final ACTUAL actual, final Class<?> selfType) {
+    protected AbstractTemporalAssert(final A actual, final Class<?> selfType) {
         super(actual, selfType);
     }
 
     // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
     protected <R> R isSupported(
             final TemporalUnit unit,
-            final Function<? super SELF, ? extends Function<? super Boolean, ? extends R>> function) {
+            final Function<? super S, ? extends Function<? super Boolean, ? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(actual.isSupported(unit));
     }
@@ -50,11 +47,11 @@ public abstract class AbstractTemporalAssert<
      * Asserts that specified unit is supported by the {@link #actual}.
      *
      * @param unit the unit.
-     * @return {@link SELF}
+     * @return {@link S}
      */
-    public SELF supports(final TemporalUnit unit) {
+    public S supports(final TemporalUnit unit) {
         return isSupported(unit, s -> r -> {
-            assertThat(r).isTrue();
+            Assertions.assertThat(r).isTrue();
             return s;
         });
     }
@@ -63,18 +60,18 @@ public abstract class AbstractTemporalAssert<
      * Asserts that specified unit is not supported by the {@link #actual}.
      *
      * @param unit the unit.
-     * @return {@link SELF}.
+     * @return {@link S}.
      */
-    public SELF doesNotSupport(final TemporalUnit unit) {
+    public S doesNotSupport(final TemporalUnit unit) {
         return isSupported(unit, s -> r -> {
-            assertThat(r).isFalse();
+            Assertions.assertThat(r).isFalse();
             return s;
         });
     }
 
     // ----------------------------------------------------------------------------------- minus(J,TemporalUnit)Temporal
     protected <R> R minus(final long amountToSubtract, final TemporalUnit unit,
-                          final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
+                          final Function<? super S, ? extends Function<? super Temporal, ? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(actual.minus(amountToSubtract, unit));
     }
@@ -85,7 +82,7 @@ public abstract class AbstractTemporalAssert<
 
     // ----------------------------------------------------------------------------------- minus(TemporalAmount)Temporal
     protected <R> R minus(final TemporalAmount amount,
-                          final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
+                          final Function<? super S, ? extends Function<? super Temporal, ? extends R>> function) {
         Objects.requireNonNull(amount, "amount is null");
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
@@ -110,7 +107,7 @@ public abstract class AbstractTemporalAssert<
 
     // ----------------------------------------------------------------------------------- plus(J,TemporalUnit)Temporal
     protected <R> R plus(final long amountToSubtract, final TemporalUnit unit,
-                         final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
+                         final Function<? super S, ? extends Function<? super Temporal, ? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(actual.plus(amountToSubtract, unit));
     }
@@ -121,7 +118,7 @@ public abstract class AbstractTemporalAssert<
 
     // ----------------------------------------------------------------------------------- plus(TemporalAmount)Temporal
     protected <R> R plus(final TemporalAmount amount,
-                         final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
+                         final Function<? super S, ? extends Function<? super Temporal, ? extends R>> function) {
         Objects.requireNonNull(amount, "amount is null");
         Objects.requireNonNull(function, "function is null");
         return function.apply(isNotNull())
@@ -146,7 +143,7 @@ public abstract class AbstractTemporalAssert<
 
     // ----------------------------------------------------------------------------------- until(Temporal,TemporalUnit)J
     protected <R> R until(final Temporal endExclusive, final TemporalUnit unit,
-                          final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
+                          final Function<? super S, ? extends LongFunction<? extends R>> function) {
         return function.apply(isNotNull())
                 .apply(actual.until(endExclusive, unit));
     }

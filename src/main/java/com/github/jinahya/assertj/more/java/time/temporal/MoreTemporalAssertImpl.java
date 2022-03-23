@@ -7,19 +7,14 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 
 class MoreTemporalAssertImpl
-        extends AbstractMoreTemporalAssert<MoreTemporalAssertImpl> {
+        extends AbstractMoreTemporalAssert<MoreTemporalAssertImpl, Temporal> {
 
     MoreTemporalAssertImpl(final Temporal actual) {
         super(actual, MoreTemporalAssertImpl.class);
     }
 
     @Override
-    protected Temporal parse(String temporalAsString) {
-        throw new UnsupportedOperationException("unsupported");
-    }
-
-    @Override
-    public MoreTemporalAssert<?, Temporal> extractingMinus(long amountToSubtract, TemporalUnit unit) {
+    public MoreTemporalAssert extractingMinus(long amountToSubtract, TemporalUnit unit) {
         return null;
     }
 
@@ -47,4 +42,9 @@ class MoreTemporalAssertImpl
     public MoreTemporalAssert<?, ? extends Temporal> with(TemporalField field, long newValue) {
         return null;
     }
+
+//    @Override
+//    protected Temporal parse(String temporalAsString) {
+//        return null;
+//    }
 }

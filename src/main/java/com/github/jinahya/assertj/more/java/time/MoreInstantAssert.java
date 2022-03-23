@@ -12,18 +12,18 @@ import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 
-public interface MoreInstantAssert<SELF extends MoreInstantAssert<SELF>>
-        extends MoreJavaTimeAssert<SELF, Instant>,
-                MoreTemporalAssert<SELF, Instant>,
-                MoreTemporalAdjusterAssert<SELF, Instant> {
+public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
+        extends MoreJavaTimeAssert<S, Instant>,
+                MoreTemporalAssert<S, Instant>,
+                MoreTemporalAdjusterAssert<S, Instant> {
 
     // ----------------------------------------------------------------------------------------------- getEpochSecond()J
     default AbstractLongAssert<?> extractingEpochSecond() {
-        return MoreInstantAssertHelper.getEpochSecond((SELF) this, s -> Assertions::assertThat);
+        return MoreInstantAssertHelper.getEpochSecond((S) this, s -> Assertions::assertThat);
     }
 
-    default SELF hasEpochSecond(final long expected) {
-        return MoreInstantAssertHelper.getEpochSecond((SELF) this, s -> r -> {
+    default S hasEpochSecond(final long expected) {
+        return MoreInstantAssertHelper.getEpochSecond((S) this, s -> r -> {
             Assertions.assertThat(r).isEqualTo(expected);
             return s;
         });

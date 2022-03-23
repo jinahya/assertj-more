@@ -10,9 +10,9 @@ import java.util.function.LongFunction;
 final class MoreInstantAssertHelper {
 
     // ----------------------------------------------------------------------------------------------- getEpochSecond()J
-    static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends Instant, R> R getEpochSecond(
-            final SELF self,
-            final Function<? super SELF, ? extends LongFunction<? extends R>> function) {
+    static <S extends Assert<S, A>, A extends Instant, R> R getEpochSecond(
+            final S self,
+            final Function<? super S, ? extends LongFunction<? extends R>> function) {
         return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).getEpochSecond());
     }

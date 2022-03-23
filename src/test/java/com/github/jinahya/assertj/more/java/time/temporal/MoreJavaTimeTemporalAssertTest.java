@@ -2,15 +2,11 @@ package com.github.jinahya.assertj.more.java.time.temporal;
 
 import com.github.jinahya.assertj.more.MoreAssertTest;
 
-import java.time.temporal.TemporalAccessor;
+abstract class MoreJavaTimeTemporalAssertTest<S extends MoreJavaTimeTemporalAssert<S, A>, A>
+        extends MoreAssertTest<S, A> {
 
-abstract class MoreJavaTimeTemporalAssertTest<
-        ASSERT extends MoreJavaTimeTemporalAssert<ASSERT, ACTUAL>,
-        ACTUAL extends TemporalAccessor>
-        extends MoreAssertTest<ASSERT, ACTUAL> {
-
-    protected MoreJavaTimeTemporalAssertTest(final Class<ASSERT> assertClass,
-                                             final Class<ACTUAL> actualClass) {
+    protected MoreJavaTimeTemporalAssertTest(final Class<S> assertClass,
+                                             final Class<A> actualClass) {
         super(assertClass, actualClass);
     }
 }

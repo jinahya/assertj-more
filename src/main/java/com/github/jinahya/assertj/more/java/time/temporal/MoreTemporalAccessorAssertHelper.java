@@ -78,15 +78,15 @@ class MoreTemporalAccessorAssertHelper {
      * @param field    the field.
      * @param self     the assertion.
      * @param function the function.
-     * @param <SELF>   self type parameter
-     * @param <ACTUAL> actual type parameter
+     * @param <S>      self type parameter
+     * @param <A>      actual type parameter
      * @param <R>      result type parameter
      * @return the result of the {@code functione.}
      */
-    static <SELF extends Assert<SELF, ACTUAL>, ACTUAL extends TemporalAccessor, R> R range(
+    static <S extends Assert<S, A>, A extends TemporalAccessor, R> R range(
             final TemporalField field,
-            final SELF self,
-            final Function<? super SELF, ? extends Function<? super ValueRange, ? extends R>> function) {
+            final S self,
+            final Function<? super S, ? extends Function<? super ValueRange, ? extends R>> function) {
         Objects.requireNonNull(function, "function is null");
         return function.apply(ForAssert.assertActualIsNotNull(self))
                 .apply(ForAssert.getActual(self).range(field));

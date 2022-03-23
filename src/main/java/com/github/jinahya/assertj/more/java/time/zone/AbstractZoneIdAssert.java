@@ -2,13 +2,12 @@ package com.github.jinahya.assertj.more.java.time.zone;
 
 import com.github.jinahya.assertj.more.hidden.ForAssert;
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.Assertions;
 
 import java.time.ZoneId;
 import java.time.zone.ZoneRules;
 import java.util.Objects;
 import java.util.function.Function;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * An abstract assert class for verifying values of {@link ZoneId}.
@@ -40,7 +39,7 @@ public abstract class AbstractZoneIdAssert<S extends AbstractZoneIdAssert<S, A>,
 
     public S hasId(final String expected) {
         return getId(s -> v -> {
-            assertThat(v).isEqualTo(expected);
+            Assertions.assertThat(v).isEqualTo(expected);
             return s;
         });
     }
