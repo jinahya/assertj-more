@@ -20,7 +20,6 @@ import java.time.temporal.TemporalUnit;
 public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extends Temporal>
         extends MoreTemporalAccessorAssert<S, A> {
 
-    // -------------------------------------------------------------------------------------- isSupported(TemporalUnit)Z
     default S supports(final TemporalUnit unit) {
         return ForAssert.applyActual2(isNotNull(), s -> a -> {
             Assertions.assertThat(a.isSupported(unit))
@@ -37,87 +36,23 @@ public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extend
         });
     }
 
-    // ----------------------------------------------------------------------------------- minus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingMinus(long amountToSubtract, TemporalUnit unit);
 
-    // ----------------------------------------------------------------------------------- minus(TemporalAmount)Temporal
     MoreTemporalAssert<?, A> extractingMinus(TemporalAmount amount);
 
-    // ------------------------------------------------------------------------------------ plus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingPlus(long amountToAdd, TemporalUnit unit);
 
-    // ------------------------------------------------------------------------------------ plus(J,TemporalUnit)Temporal
     MoreTemporalAssert<?, A> extractingPlus(TemporalAmount amount);
 
-    //    default MoreTemporalAssert<?, Temporal> extractingMinus(final long amountToSubtract, final TemporalUnit unit) {
-//        return MoreTemporalAssertHelper.minus(amountToSubtract, unit, (SELF) this, s -> DefaultMoreTemporalAssert::new);
-//    }
-//
-//    // ----------------------------------------------------------------------------------- minus(TemporalAmount)Temporal
-//    protected <R> R minus(final TemporalAmount amount,
-//                          final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
-//        Objects.requireNonNull(amount, "amount is null");
-//        Objects.requireNonNull(function, "function is null");
-//        return function.apply(isNotNull())
-//                .apply(actual.minus(amount));
-//    }
-//
-//    public <A extends Assert<A, Temporal>> A extractingMinusApplying(
-//            final TemporalAmount amount, final Function<? super Temporal, ? extends A> function) {
-//        Objects.requireNonNull(function, "function is null");
-//        return minus(amount, s -> function);
-//    }
-//
-//    public <A extends Assert<A, Temporal>> A extractingMinusCreating(
-//            final TemporalAmount amount, final AssertFactory<? super Temporal, ? extends A> factory) {
-//        Objects.requireNonNull(factory, "factory is null");
-//        return extractingMinusApplying(amount, factory::createAssert);
-//    }
-//
-//    public MoreTemporalAssert<?, Temporal> extractingMinus(final TemporalAmount amount) {
-//        return extractingMinusCreating(amount, DefaultMoreTemporalAssert::new);
-//    }
-//
-//    // ----------------------------------------------------------------------------------- plus(J,TemporalUnit)Temporal
-//    protected <R> R plus(final long amountToSubtract, final TemporalUnit unit,
-//                         final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
-//        return function.apply(isNotNull())
-//                .apply(actual.plus(amountToSubtract, unit));
-//    }
-//
-//    public MoreTemporalAssert<?, Temporal> extractingPlus(final long amountToSubtract, final TemporalUnit unit) {
-//        return plus(amountToSubtract, unit, s -> DefaultMoreTemporalAssert::new);
-//    }
-//
-//    // ----------------------------------------------------------------------------------- plus(TemporalAmount)Temporal
-//    protected <R> R plus(final TemporalAmount amount,
-//                         final Function<? super SELF, ? extends Function<? super Temporal, ? extends R>> function) {
-//        Objects.requireNonNull(amount, "amount is null");
-//        Objects.requireNonNull(function, "function is null");
-//        return function.apply(isNotNull())
-//                .apply(actual.plus(amount));
-//    }
-//
-//    public <A extends Assert<A, Temporal>> A extractingPlusApplying(
-//            final TemporalAmount amount, final Function<? super Temporal, ? extends A> function) {
-//        Objects.requireNonNull(function, "function is null");
-//        return plus(amount, s -> function);
-//    }
-//
-//    public <A extends Assert<A, Temporal>> A extractingPlusCreating(
-//            final TemporalAmount amount, final AssertFactory<? super Temporal, ? extends A> factory) {
-//        Objects.requireNonNull(factory, "factory is null");
-//        return extractingPlusApplying(amount, factory::createAssert);
-//    }
-//
-//    public MoreTemporalAssert<?, Temporal> extractingPlus(final TemporalAmount amount) {
-//        return extractingPlusCreating(amount, DefaultMoreTemporalAssert::new);
-//    }
-//
-    default AbstractLongAssert<?> extractingUntil(Temporal endExclusive, TemporalUnit unit) {
-        return ForAssert.applyNonNullActual1(
+    default AbstractLongAssert<?> extractingUntil(final Temporal endExclusive, final TemporalUnit unit) {
+        return ForAssert.applyActual2(
                 isNotNull(),
-                a -> Assertions.assertThat(a.until(endExclusive, unit))
+                s -> a -> {
+                    final long[] results = new long[1];
+                    Assertions.assertThatCode(() -> results[0] = a.until(endExclusive, unit))
+                            .doesNotThrowAnyException();
+                    return Assertions.assertThat(results[0]);
+                }
         );
     }
 

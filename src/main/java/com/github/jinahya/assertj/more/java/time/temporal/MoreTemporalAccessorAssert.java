@@ -2,9 +2,6 @@ package com.github.jinahya.assertj.more.java.time.temporal;
 
 import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
-import org.assertj.core.api.AbstractBooleanAssert;
-import org.assertj.core.api.AbstractIntegerAssert;
-import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.Assert;
 import org.assertj.core.api.AssertFactory;
@@ -14,27 +11,56 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalQuery;
-import java.time.temporal.ValueRange;
 import java.util.Objects;
 import java.util.function.Function;
 
 public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert<S, A>, A extends TemporalAccessor>
         extends MoreJavaTimeTemporalAssert<S, A> {
 
-    // ------------------------------------------------------------------------------------- isSupported(TemporalField)Z
+    /**
+     * Verifies that the result of {@link TemporalAccessor#get(TemporalField) actual.get(field)} is equals to specified
+     * value.
+     *
+     * @param field    a value for the {@code field} argument.
+     * @param expected the expected value of the {@code actual.get(field)}.
+     * @return this assertion object.
+     * @see TemporalAccessor#get(TemporalField)
+     */
+    default S has(final TemporalField field, final int expected) {
+        Objects.requireNonNull(field, "field is null");
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                        () -> a.get(field),
+                        r -> {
+                            Assertions.assertThat(r).isEqualTo(expected);
+                            return s;
+                        }
+                )
+        );
+    }
 
     /**
-     * Returns an assertion for verifying the result of {@link TemporalAccessor#isSupported(TemporalField)} invoked on
-     * the {@code actual} with specified field.
+     * Verifies that the result of {@link TemporalAccessor#getLong(TemporalField) actual.get(field)} is equals to
+     * specified value.
      *
-     * @param field the field.
-     * @return an assertion of boolean.
-     * @see TemporalAccessor#isSupported(TemporalField)
-     * @see #supports(TemporalField)
-     * @see #doesNotSupport(TemporalField)
+     * @param field    a value for the {@code field} argument.
+     * @param expected the expected value of the {@code actual.getLong(field)}.
+     * @return this assertion object.
+     * @see TemporalAccessor#getLong(TemporalField)
      */
-    default AbstractBooleanAssert<?> extractingIsSupported(final TemporalField field) {
-        return ForAssert.applyActual2(isNotNull(), s -> a -> Assertions.assertThat(a.isSupported(field)));
+    default S hasLong(final TemporalField field, final long expected) {
+        Objects.requireNonNull(field, "field is null");
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                        () -> a.getLong(field),
+                        r -> {
+                            Assertions.assertThat(r).isEqualTo(expected);
+                            return s;
+                        }
+                )
+        );
     }
 
     /**
@@ -46,10 +72,14 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      * @see #doesNotSupport(TemporalField)
      */
     default S supports(final TemporalField field) {
-        return ForAssert.applyActual2(isNotNull(), s -> a -> {
-            Assertions.assertThat(a.isSupported(field)).isTrue();
-            return s;
-        });
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.isSupported(field))
+                            .isTrue();
+                    return s;
+                }
+        );
     }
 
     /**
@@ -61,120 +91,31 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
      * @see #supports(TemporalField)
      */
     default S doesNotSupport(final TemporalField field) {
-        return ForAssert.applyActual2(isNotNull(), s -> a -> {
-            Assertions.assertThat(a.isSupported(field)).isFalse();
-            return s;
-        });
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> {
+                    Assertions.assertThat(a.isSupported(field))
+                            .isFalse();
+                    return s;
+                }
+        );
     }
 
-    // ---------------------------------------------------------------------------------- range(TemporalField)ValueRange
-    @SuppressWarnings({"unchecked"})
-    default <R> R extractingRangeApplying(final TemporalField field,
-                                          final Function<? super ValueRange, ? extends R> function) {
+    default <R, E extends Assert<E, ? super R>> E extractingQueryResultApplying(
+            final TemporalQuery<R> query, final Function<? super R, ? extends E> function) {
+        Objects.requireNonNull(query, "query is null");
         Objects.requireNonNull(function, "function is null");
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            Assertions.assertThat(a.isSupported(field));
-            return function.apply(a.range(field));
-        });
-    }
-
-    @SuppressWarnings({"unchecked"})
-    default <R> R extractingRangeCreating(final TemporalField field,
-                                          final AssertFactory<? super ValueRange, ? extends R> factory) {
-        Objects.requireNonNull(factory, "factory is null");
-        return extractingRangeApplying(field, factory::createAssert);
-    }
-
-    default AbstractMoreValueRangeAssert<?> extractingRange(final TemporalField field) {
-        return ForAssert.assertActualIsNotNullAndApply2(
-                (S) this,
-                s -> a -> MoreAssertions.doesNotThrowAnyException(
-                        () -> a.range(field),
-                        MoreJavaTimeTemporalAssertions::assertMore
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                        () -> a.query(query),
+                        function
                 )
         );
     }
 
-    // --------------------------------------------------------------------------------------------- get(TemporalField)I
-
-    /**
-     * Verifies that specified field is {@link #supports(TemporalField) supported} by the {@code actual} and returns an
-     * assertion for verifying the {@code actual}'s value of the field.
-     *
-     * @param field the field.
-     * @return an assertion instance of integer.
-     * @see #supports(TemporalField)
-     * @see TemporalAccessor#get(TemporalField)
-     */
-    @SuppressWarnings({"unchecked"})
-    default AbstractIntegerAssert<?> extracting(final TemporalField field) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            Assertions.assertThat(a.isSupported(field)).isTrue();
-            return Assertions.assertThat(a.get(field));
-        });
-    }
-
-    /**
-     * Verifies that specified is {@link #supports(TemporalField) supported} by the {@code actual} and the {@code
-     * actual}'s value of the field is equal to specified value.
-     *
-     * @param field    the field whose value is verified.
-     * @param expected the expected value of the {@code field}.
-     * @return this assertion.
-     * @see #supports(TemporalField)
-     * @see TemporalAccessor#get(TemporalField)
-     */
-    @SuppressWarnings({"unchecked"})
-    default S has(final TemporalField field, final int expected) {
-        return ForAssert.assertActualIsNotNullAndApply2((S) this, s -> a -> {
-            Assertions.assertThat(a.isSupported(field)).isTrue();
-            Assertions.assertThat(a.get(field)).isEqualTo(expected);
-            return s;
-        });
-    }
-
-    // ----------------------------------------------------------------------------------------- getLong(TemporalField)J
-
-    /**
-     * Verifies that specified field is {@link #supports(TemporalField) supported} by the {@code actual} and returns an
-     * assertion for verifying the {@code actual}'s value of the field.
-     *
-     * @param field the field.
-     * @return an assertion instance of integer.
-     * @see #supports(TemporalField)
-     * @see TemporalAccessor#getLong(TemporalField)
-     */
-    default AbstractLongAssert<?> extractingLong(final TemporalField field) {
-        return MoreTemporalAccessorAssertHelper.getLong(field, supports(field), s -> Assertions::assertThat);
-    }
-
-    /**
-     * Verifies that specified is {@link #supports(TemporalField) supported} by the {@code actual} and the {@code
-     * actual}'s value of the field is equal to specified value.
-     *
-     * @param field    the field whose value is verified.
-     * @param expected the expected value of the {@code field}.
-     * @return this assertion.
-     * @see #supports(TemporalField)
-     * @see TemporalAccessor#getLong(TemporalField)
-     */
-    default S hasLong(final TemporalField field, final long expected) {
-        return MoreTemporalAccessorAssertHelper.getLong(field, supports(field), s -> r -> {
-            Assertions.assertThat(r).isEqualTo(expected);
-            return s;
-        });
-    }
-
-    // -------------------------------------------------------------------------------------- query(TemporalQuery)Object
-    @SuppressWarnings({"unchecked"})
-    default <R, A extends Assert<A, R>> A extractingQueryResultApplying(
-            final TemporalQuery<R> query, final Function<? super R, ? extends A> function) {
-        Objects.requireNonNull(function, "function is null");
-        return MoreTemporalAccessorAssertHelper.query(query, (S) this, s -> function);
-    }
-
-    default <R, A extends Assert<A, R>> A extractingQueryResultCreating(
-            final TemporalQuery<R> query, final AssertFactory<? super R, ? extends A> factory) {
+    default <R, E extends Assert<E, ? super R>> E extractingQueryResultCreating(
+            final TemporalQuery<R> query, final AssertFactory<? super R, ? extends E> factory) {
         Objects.requireNonNull(factory, "factory is null");
         return extractingQueryResultApplying(query, factory::createAssert);
     }
@@ -185,5 +126,16 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
 
     default <R> AbstractObjectAssert<?, R> extractingQueryResult(final TemporalQuery<R> query) {
         return extractingQueryResultCreating(query, Assertions::assertThat);
+    }
+
+    default AbstractMoreValueRangeAssert<?> extractingRange(final TemporalField field) {
+        Objects.requireNonNull(field, "field is null");
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                        () -> a.range(field),
+                        MoreJavaTimeTemporalAssertions::assertMore
+                )
+        );
     }
 }
