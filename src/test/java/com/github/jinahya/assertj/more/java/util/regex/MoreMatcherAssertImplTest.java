@@ -1,6 +1,7 @@
 package com.github.jinahya.assertj.more.java.util.regex;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +15,9 @@ class MoreMatcherAssertImplTest
         super(MoreMatcherAssertImpl.class, Matcher.class);
     }
 
+    @DisplayName("appendsReplacement")
     @Nested
-    class AppendReplacementTest {
+    class AppendsReplacementTest {
 
         @Test
         void test1__() {
@@ -48,7 +50,28 @@ class MoreMatcherAssertImplTest
                 Assertions.assertThat(sb)
                         .hasToString(expected);
             }
+            {
+                final MoreMatcherAssert<?> more = assertInstance(pattern.matcher(input));
+                final StringBuilder sb = new StringBuilder();
+                while (true) {
+                    try {
+                        more.finds();
+                    } catch (final AssertionError ae) {
+                        break;
+                    }
+                    more.appendsReplacement(sb, replacement);
+                }
+                more.appendsTail(sb);
+                Assertions.assertThat(sb)
+                        .hasToString(expected);
+            }
         }
+    }
+
+    @DisplayName("appendsTail")
+    @Nested
+    class AppendsTailTest {
+
     }
 
     @Nested
