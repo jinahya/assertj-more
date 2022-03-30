@@ -13,10 +13,10 @@ class MoreLocalDateAssertImpl_AtTime_Test
     void extractingAtTime__LocalTime() {
         final LocalDate actual = LocalDate.now();
         final LocalTime localTime = LocalTime.now();
-        final MoreLocalDateAssertImpl assertInstance = assertInstance(actual);
-        Assertions.assertThatCode(() -> assertInstance.extractingAtTime(localTime))
+        final MoreLocalDateAssert<?> more = assertInstance(actual);
+        Assertions.assertThatCode(() -> more.extractingAtTime(localTime))
                 .doesNotThrowAnyException();
-        Assertions.assertThat(assertInstance.extractingAtTime(localTime))
+        Assertions.assertThat(more.extractingAtTime(localTime))
                 .isInstanceOf(AbstractMoreLocalDateTimeAssert.class);
     }
 }

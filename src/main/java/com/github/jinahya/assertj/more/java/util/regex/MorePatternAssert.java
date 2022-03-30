@@ -61,6 +61,14 @@ public interface MorePatternAssert<S extends MorePatternAssert<S>>
 
     // ----------------------------------------------------------------------------------- split(CharSequence,I)String[]
 
+    /**
+     * Returns an assertion of object for verifying the result of {@link Pattern#split(CharSequence, int)} method
+     * invoked on the {@code actual} with specified arguments.
+     *
+     * @param input a value for {@code input} argument.
+     * @param limit a value for {@code limit} argument.
+     * @return an object array assertion.
+     */
     default ObjectArrayAssert<String> extractingSplit(final CharSequence input, final int limit) {
         return ForAssert.applyActual2(
                 isNotNull(),
@@ -68,6 +76,15 @@ public interface MorePatternAssert<S extends MorePatternAssert<S>>
         );
     }
 
+    /**
+     * Verifies that the result of {@link Pattern#split(CharSequence, int)} method, invoked on the actual with specified
+     * arguments, is equal to specified expected value.
+     *
+     * @param input    a value for {@code input} argument.
+     * @param limit    a value for {@code limit} argument.
+     * @param expected the expected value of {@code actual.split(input, limit)}.
+     * @return this assertion object.
+     */
     default S splits(final CharSequence input, final int limit, final String[] expected) {
         extractingSplit(input, limit)
                 .isEqualTo(expected);
