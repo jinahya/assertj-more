@@ -1,5 +1,6 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
+import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.Assertions;
@@ -36,23 +37,55 @@ public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extend
         });
     }
 
+    /**
+     * Returns an assertion object for verifying the result of {@link Temporal#minus(long, TemporalUnit)} method invoked
+     * on the {@code actual} with specified arguments.
+     *
+     * @param amountToSubtract a value for {@code amountToSubtract} argument.
+     * @param unit             a value for {@code unit} argument.
+     * @return an assertion object for verifying the result of {@code actual.minus(amountToSubtract, unit)}.
+     * @see Temporal#minus(long, TemporalUnit)
+     */
     MoreTemporalAssert<?, A> extractingMinus(long amountToSubtract, TemporalUnit unit);
 
+    /**
+     * Returns an assertion object for verifying the result of {@link Temporal#minus(TemporalAmount)} method invoked on
+     * the {@code actual} with specified arguments.
+     *
+     * @param amount a value for {@code amount} argument.
+     * @return an assertion object for verifying the result of {@code actual.minus(amount)}.
+     * @see Temporal#minus(TemporalAmount)
+     */
     MoreTemporalAssert<?, A> extractingMinus(TemporalAmount amount);
 
+    /**
+     * Returns an assertion object for verifying the result of {@link Temporal#plus(long, TemporalUnit)} method invoked
+     * on the {@code actual} with specified arguments.
+     *
+     * @param amountToAdd a value for {@code amountToAdd} argument.
+     * @param unit        a value for {@code unit} argument.
+     * @return an assertion object for verifying the result of {@code actual.plus(amountToSubtract, unit)}.
+     * @see Temporal#plus(long, TemporalUnit)
+     */
     MoreTemporalAssert<?, A> extractingPlus(long amountToAdd, TemporalUnit unit);
 
+    /**
+     * Returns an assertion object for verifying the result of {@link Temporal#plus(TemporalAmount)} method invoked on
+     * the {@code actual} with specified arguments.
+     *
+     * @param amount a value for {@code amount} argument.
+     * @return an assertion object for verifying the result of {@code actual.plus(amount)}.
+     * @see Temporal#plus(TemporalAmount)
+     */
     MoreTemporalAssert<?, A> extractingPlus(TemporalAmount amount);
 
     default AbstractLongAssert<?> extractingUntil(final Temporal endExclusive, final TemporalUnit unit) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> {
-                    final long[] results = new long[1];
-                    Assertions.assertThatCode(() -> results[0] = a.until(endExclusive, unit))
-                            .doesNotThrowAnyException();
-                    return Assertions.assertThat(results[0]);
-                }
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                        () -> a.until(endExclusive, unit),
+                        Assertions::assertThat
+                )
         );
     }
 

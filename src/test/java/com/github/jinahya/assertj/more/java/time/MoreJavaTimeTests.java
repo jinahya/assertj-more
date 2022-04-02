@@ -2,7 +2,10 @@ package com.github.jinahya.assertj.more.java.time;
 
 import java.time.DateTimeException;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +15,17 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public final class MoreJavaTimeTests {
+
+    public static Stream<ZoneId> zoneIdStream() {
+        return ZoneId.getAvailableZoneIds()
+                .stream()
+                .map(ZoneId::of);
+    }
+
+    public static Stream<ZoneOffset> zoneOffsetStream(final Instant instant) {
+        return zoneIdStream()
+                .map(z -> z.getRules().getOffset(instant));
+    }
 
     public static Stream<Duration> durationStream() {
         return Arrays.stream(ChronoUnit.values())
