@@ -26,7 +26,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     default S appendsReplacement(final StringBuffer sb, final String replacement) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.appendReplacement(sb, replacement),
                         r -> s
                 )
@@ -38,7 +38,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
             final Method method = Matcher.class.getMethod("appendReplacement", StringBuilder.class, String.class);
             return ForAssert.applyActual2(
                     isNotNull(),
-                    s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                    s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                             () -> method.invoke(a, sb, replacement),
                             r -> s
                     )
@@ -63,7 +63,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     default S appendsTail(final StringBuffer sb) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.appendTail(sb),
                         r -> s
                 )
@@ -75,7 +75,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
             final Method method = Matcher.class.getMethod("appendTail", StringBuilder.class);
             return ForAssert.applyActual2(
                     isNotNull(),
-                    s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                    s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                             () -> method.invoke(a, sb),
                             r -> s
                     )
@@ -94,7 +94,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.end(name),
                         r -> {
                             consumer.accept(r);
@@ -151,7 +151,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     default S finds(final int start) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.find(start),
                         v -> {
                             Assertions.assertThat(v)
@@ -181,7 +181,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.group(name),
                         r -> {
                             consumer.accept(r);
@@ -318,7 +318,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     default S setsRegion(final int start, final int end) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.region(start, end),
                         r -> s
                 )
@@ -359,7 +359,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.replaceAll(replacement),
                         r -> {
                             consumer.accept(r);
@@ -377,7 +377,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.replaceFirst(replacement),
                         r -> {
                             consumer.accept(r);
@@ -431,7 +431,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.start(name),
                         r -> {
                             consumer.accept(r);
@@ -481,7 +481,7 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     default S setsPattern(final Pattern newPattern) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.usePattern(newPattern),
                         r -> s
                 )

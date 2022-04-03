@@ -8,6 +8,7 @@ import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.AbstractStringAssert;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ComparableAssert;
 
 import java.time.LocalTime;
 import java.time.chrono.ChronoLocalDate;
@@ -32,6 +33,7 @@ public interface MoreChronoLocalDateAssert<
         S extends MoreChronoLocalDateAssert<S, A>,
         A extends ChronoLocalDate>
         extends MoreJavaTimeChronoAssert<S, A>,
+                ComparableAssert<S, A>,
                 MoreTemporalAssert<S, A>,
                 MoreTemporalAdjusterAssert<S, A> {
 
@@ -261,8 +263,8 @@ public interface MoreChronoLocalDateAssert<
     MoreChronoPeriodAssert<?, ? extends ChronoPeriod> extractingUntil(ChronoLocalDate endDateExclusive);
 
     @Override
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> with(TemporalAdjuster adjuster);
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingWith(TemporalAdjuster adjuster);
 
     @Override
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> with(TemporalField field, long newValue);
+    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingWith(TemporalField field, long newValue);
 }

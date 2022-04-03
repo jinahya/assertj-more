@@ -1,9 +1,10 @@
 package com.github.jinahya.assertj.more.java.time;
 
+import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
+import com.github.jinahya.assertj.more.java.time.temporal.MoreJavaTimeTemporalAssertions;
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAdjusterAssert;
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAssert;
-import org.assertj.core.api.AbstractIntegerAssert;
 import org.assertj.core.api.AbstractStringAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ComparableAssert;
@@ -17,12 +18,13 @@ import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalField;
 import java.time.temporal.TemporalUnit;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
         extends MoreJavaTimeAssert<S, LocalTime>,
+                ComparableAssert<S, LocalTime>,
                 MoreTemporalAssert<S, LocalTime>,
-                MoreTemporalAdjusterAssert<S, LocalTime>,
-                ComparableAssert<S, LocalTime> {
+                MoreTemporalAdjusterAssert<S, LocalTime> {
 
     default AbstractMoreLocalDateTimeAssert<?> extractingAtDate(final LocalDate date) {
         Objects.requireNonNull(date, "date is null");
@@ -44,67 +46,60 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
         Objects.requireNonNull(formatter, "formatter is null");
         return ForAssert.applyActual2(
                 isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.format(formatter),
+                        Assertions::assertThat
+                )
+        );
+    }
+
+    /**
+     * Asserts that the result of {@link LocalTime#getHour()} method, invoked on the {@code actual}, is equal to
+     * specified value.
+     *
+     * @param expected the expected value of {@code actual.getHour()}.
+     * @return this assertion object.
+     */
+    default S hasHour(final int expected) {
+        return ForAssert.applyActual2(
+                isNotNull(),
                 s -> a -> {
-                    final String[] results = new String[1];
-                    Assertions.assertThatCode(() -> {
-                                results[0] = a.format(formatter);
-                            })
-                            .doesNotThrowAnyException();
-                    return Assertions.assertThat(results[0]);
+                    Assertions.assertThat(a.getHour())
+                            .isEqualTo(expected);
+                    return s;
                 }
         );
     }
 
-    default AbstractIntegerAssert<?> extractingHour() {
-        return ForAssert.applyActual2(
-                isNotNull(),
-                s -> a -> Assertions.assertThat(a.getHour())
-        );
-    }
-
-    @SuppressWarnings({"unechcked"})
-    default S hasHour(final int expected) {
-        extractingHour()
-                .isEqualTo(expected);
-        return (S) this;
-    }
-
-    default AbstractIntegerAssert<?> extractingMinute() {
-        return ForAssert.applyActual2(
-                isNotNull(),
-                s -> a -> Assertions.assertThat(a.getMinute())
-        );
-    }
-
-    @SuppressWarnings({"unechcked"})
+    /**
+     * Asserts that the result of {@link LocalTime#getMinute()} method, invoked on the {@code actual}, is equal to
+     * specified value.
+     *
+     * @param expected the expected value of {@code actual.getMinute()}.
+     * @return this assertion object.
+     */
     default S hasMinute(final int expected) {
-        extractingMinute()
-                .isEqualTo(expected);
-        return (S) this;
-    }
-
-    default AbstractIntegerAssert<?> extractingNano() {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> Assertions.assertThat(a.getNano())
+                s -> a -> {
+                    Assertions.assertThat(a.getMinute())
+                            .isEqualTo(expected);
+                    return s;
+                }
         );
     }
 
-    @SuppressWarnings({"unechcked"})
     default S hasNano(final int expected) {
-        extractingNano()
-                .isEqualTo(expected);
-        return (S) this;
-    }
-
-    default AbstractIntegerAssert<?> extractingSecond() {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> Assertions.assertThat(a.getSecond())
+                s -> a -> {
+                    Assertions.assertThat(a.getNano())
+                            .isEqualTo(expected);
+                    return s;
+                }
         );
     }
 
-    @SuppressWarnings({"unechcked"})
     default S hasSecond(final int expected) {
         return ForAssert.applyActual2(
                 isNotNull(),
@@ -116,19 +111,17 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
         );
     }
 
-    @Deprecated // AbstractLocalTimeAssert#isAfter(LocalTime)
-    default S isAfter(final LocalTime other) {
-        return ForAssert.applyActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.isAfter(other))
-                            .isTrue();
-                    return s;
-                }
-        );
-    }
-
+    /**
+     * Verifies that the result of {@link LocalTime#isAfter(LocalTime)} method, invoked on the {@code actual} with
+     * specified argument, is {@code false}.
+     *
+     * @param other a value for {@code other} argument.
+     * @return this assertion object.
+     * @see LocalTime#isAfter(LocalTime)
+     * @see org.assertj.core.api.AbstractLocalTimeAssert#isAfter(LocalTime)
+     */
     default S isNotAfter(final LocalTime other) {
+        Objects.requireNonNull(other, "other is null");
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> {
@@ -139,19 +132,8 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
         );
     }
 
-    @Deprecated // AbstractLocalTimeAssert#isBefore(LocalTime)
-    default S isBefore(final LocalTime other) {
-        return ForAssert.applyActual2(
-                isNotNull(),
-                s -> a -> {
-                    Assertions.assertThat(a.isBefore(other))
-                            .isTrue();
-                    return s;
-                }
-        );
-    }
-
     default S isNotBefore(final LocalTime other) {
+        Objects.requireNonNull(other, "other is null");
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> {
@@ -164,17 +146,25 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
 
     @Override
     default AbstractMoreLocalTimeAssert<?> extractingMinus(final long amountToSubtract, final TemporalUnit unit) {
+        Objects.requireNonNull(unit, "unit is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.minus(amountToSubtract, unit))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.minus(amountToSubtract, unit),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
     @Override
     default AbstractMoreLocalTimeAssert<?> extractingMinus(final TemporalAmount amount) {
+        Objects.requireNonNull(amount, "amount is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.minus(amount))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.minus(amount),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
@@ -210,7 +200,10 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
     default AbstractMoreLocalTimeAssert<?> extractingPlus(final long amountToSubtract, final TemporalUnit unit) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.plus(amountToSubtract, unit))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.plus(amountToSubtract, unit),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
@@ -218,7 +211,10 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
     default AbstractMoreLocalTimeAssert<?> extractingPlus(final TemporalAmount amount) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.plus(amount))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.plus(amount),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
@@ -272,61 +268,116 @@ public interface MoreLocalTimeAssert<S extends MoreLocalTimeAssert<S>>
         );
     }
 
+    /**
+     * Returns an assertion object for verifying the result of {@link LocalTime#truncatedTo(TemporalUnit)} method,
+     * invoked on the {@code actual} with specified argument.
+     *
+     * @param unit a value for {@code unit} argument.
+     * @return an assertion object for verifying {@code actual.truncatedTo(unit)}.
+     * @see #truncatedToSatisfies(TemporalUnit, Consumer)
+     */
     default AbstractMoreLocalTimeAssert<?> extractingTruncatedTo(final TemporalUnit unit) {
+        Objects.requireNonNull(unit, "unit is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> {
-                    final LocalTime[] results = new LocalTime[1];
-                    Assertions.assertThatCode(() -> {
-                                results[0] = a.truncatedTo(unit);
-                            })
-                            .doesNotThrowAnyException();
-                    return MoreJavaTimeAssertions.assertMore(results[0]);
-                }
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.truncatedTo(unit),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
-    @Override
-    default AbstractMoreLocalTimeAssert<?> with(TemporalAdjuster adjuster) {
-        return ForAssert.applyActual2(
-                isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.with(adjuster))
-        );
+    /**
+     * Verifies the result of {@link LocalTime#truncatedTo(TemporalUnit)} method, invoked on the {@code actual} with
+     * specified argument, by accepting the result to specified consumer.
+     *
+     * @param unit     a value for the {@code unit} argument.
+     * @param consumer the consumer accepts the {@code actual} and the result of {@code actual.truncatedTo(unit)}.
+     * @return this assertion object.
+     * @see #extractingTruncatedTo(TemporalUnit)
+     */
+    @SuppressWarnings({"unchecked"})
+    default S truncatedToSatisfies(final TemporalUnit unit,
+                                   final Consumer<? super AbstractMoreLocalTimeAssert<?>> consumer) {
+        Objects.requireNonNull(unit, "unit is null");
+        Objects.requireNonNull(consumer, "consumer is null");
+        consumer.accept(extractingTruncatedTo(unit));
+        return (S) this;
     }
 
     @Override
-    default AbstractMoreLocalTimeAssert<?> with(TemporalField field, long newValue) {
+    default AbstractMoreLocalTimeAssert<?> extractingWith(final TemporalAdjuster adjuster) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.with(field, newValue))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.with(adjuster),
+                        MoreJavaTimeAssertions::assertMore
+                )
+        );
+    }
+
+//    default S withSatisfies(final TemporalAdjuster adjuster,
+//                            final Consumer<? super AbstractMoreLocalTimeAssert<?>> consumer) {
+//        return ForAssert.applyActual2(
+//                isNotNull(),
+//                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+//                        () -> a.with(adjuster),
+//                        r -> {
+//                            consumer.accept(MoreJavaTimeTemporalAssertions.assertMore(r));
+//                            return s;
+//                        }
+//                )
+//        );
+//    }
+
+    @Override
+    default AbstractMoreLocalTimeAssert<?> extractingWith(TemporalField field, long newValue) {
+        return ForAssert.applyActual2(
+                isNotNull(),
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.with(field, newValue),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
     default AbstractMoreLocalTimeAssert<?> extractingWithHour(final int hour) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.withHour(hour))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.withHour(hour),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
     default AbstractMoreLocalTimeAssert<?> extractingWithMinute(final int minute) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.withMinute(minute))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.withMinute(minute),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
     default AbstractMoreLocalTimeAssert<?> extractingWithNano(final int nanoOfSecond) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.withNano(nanoOfSecond))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.withNano(nanoOfSecond),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 
     default AbstractMoreLocalTimeAssert<?> extractingWithSecond(final int second) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeAssertions.assertMore(a.withSecond(second))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.withSecond(second),
+                        MoreJavaTimeAssertions::assertMore
+                )
         );
     }
 }

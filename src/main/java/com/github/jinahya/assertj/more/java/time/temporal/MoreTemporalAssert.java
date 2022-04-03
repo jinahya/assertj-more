@@ -82,14 +82,14 @@ public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extend
     default AbstractLongAssert<?> extractingUntil(final Temporal endExclusive, final TemporalUnit unit) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.until(endExclusive, unit),
                         Assertions::assertThat
                 )
         );
     }
 
-    MoreTemporalAssert<?, ? extends Temporal> with(TemporalAdjuster adjuster);
+    MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalAdjuster adjuster);
 
-    MoreTemporalAssert<?, ? extends Temporal> with(TemporalField field, long newValue);
+    MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalField field, long newValue);
 }

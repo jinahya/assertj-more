@@ -47,7 +47,7 @@ public interface MoreZonedDateTimeAssert<S extends MoreZonedDateTimeAssert<S>>
     }
 
     @Override
-    default MoreZonedDateTimeAssert<?> with(final TemporalAdjuster adjuster) {
+    default MoreZonedDateTimeAssert<?> extractingWith(final TemporalAdjuster adjuster) {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
                 a -> MoreJavaTimeAssertions.assertMore(a.with(adjuster))
@@ -55,7 +55,7 @@ public interface MoreZonedDateTimeAssert<S extends MoreZonedDateTimeAssert<S>>
     }
 
     @Override
-    default MoreZonedDateTimeAssert<?> with(final TemporalField field, final long newValue) {
+    default MoreZonedDateTimeAssert<?> extractingWith(final TemporalField field, final long newValue) {
         return ForAssert.applyNonNullActual1(
                 isNotNull(),
                 a -> MoreJavaTimeAssertions.assertMore(a.with(field, newValue))

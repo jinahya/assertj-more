@@ -30,7 +30,7 @@ public class MoreAssertions
      * issue</a>.
      */
     @Deprecated // https://github.com/assertj/assertj-core/issues/1652
-    public static <V, R> R assertThatCodeDoesNotThrowAnyExceptionAndApply(
+    public static <V, R> R assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
             final Callable<? extends V> callable, final Function<? super V, ? extends R> function) {
         Objects.requireNonNull(callable, "callable is null");
         Objects.requireNonNull(function, "function is null");
@@ -41,9 +41,9 @@ public class MoreAssertions
     }
 
     @Deprecated // https://github.com/assertj/assertj-core/issues/1652
-    public static <V> V assertThatCodeDoesNotThrowAnyExceptionAndApply(
+    public static <V> V assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
             final Callable<? extends V> callable) {
-        return assertThatCodeDoesNotThrowAnyExceptionAndApply(callable, Function.identity());
+        return assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(callable, Function.identity());
     }
 
     public static <R> R assertThatCodeDoesNotThrowAnyExceptionAndApplyBoolean(

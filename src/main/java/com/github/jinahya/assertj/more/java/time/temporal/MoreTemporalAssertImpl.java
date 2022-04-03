@@ -34,12 +34,12 @@ class MoreTemporalAssertImpl
     }
 
     @Override
-    public MoreTemporalAssert<?, ? extends Temporal> with(TemporalAdjuster adjuster) {
+    public MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalAdjuster adjuster) {
         return null;
     }
 
     @Override
-    public MoreTemporalAssert<?, ? extends Temporal> with(TemporalField field, long newValue) {
+    public MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalField field, long newValue) {
         return null;
     }
 

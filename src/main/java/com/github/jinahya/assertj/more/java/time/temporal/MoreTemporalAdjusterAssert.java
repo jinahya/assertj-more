@@ -14,7 +14,7 @@ public interface MoreTemporalAdjusterAssert<S extends MoreTemporalAdjusterAssert
         Objects.requireNonNull(temporal, "temporal is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.adjustInto(temporal),
                         MoreJavaTimeTemporalAssertions::assertMore
                 )

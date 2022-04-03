@@ -30,7 +30,7 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
         Objects.requireNonNull(field, "field is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.get(field),
                         r -> {
                             Assertions.assertThat(r).isEqualTo(expected);
@@ -53,7 +53,7 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
         Objects.requireNonNull(field, "field is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.getLong(field),
                         r -> {
                             Assertions.assertThat(r).isEqualTo(expected);
@@ -107,7 +107,7 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
         Objects.requireNonNull(function, "function is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.query(query),
                         function
                 )
@@ -132,7 +132,7 @@ public interface MoreTemporalAccessorAssert<S extends MoreTemporalAccessorAssert
         Objects.requireNonNull(field, "field is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.range(field),
                         MoreJavaTimeTemporalAssertions::assertMore
                 )

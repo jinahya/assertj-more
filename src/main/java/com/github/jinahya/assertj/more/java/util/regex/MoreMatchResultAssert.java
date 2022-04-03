@@ -30,7 +30,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         a::end,
                         v -> {
                             consumer.accept(v);
@@ -63,7 +63,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.end(group),
                         r -> {
                             consumer.accept(r);
@@ -95,7 +95,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         a::group,
                         v -> {
                             consumer.accept(v);
@@ -130,7 +130,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.group(group),
                         v -> {
                             consumer.accept(v);
@@ -165,7 +165,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         a::groupCount,
                         v -> {
                             consumer.accept(v);
@@ -198,7 +198,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         a::start,
                         v -> {
                             consumer.accept(v);
@@ -231,7 +231,7 @@ public interface MoreMatchResultAssert<S extends MoreMatchResultAssert<S, A>, A 
         Objects.requireNonNull(consumer, "consumer is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.start(group),
                         v -> {
                             consumer.accept(v);

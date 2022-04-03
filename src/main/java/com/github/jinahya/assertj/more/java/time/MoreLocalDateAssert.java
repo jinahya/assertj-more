@@ -322,7 +322,7 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
     }
 
     @Override
-    default AbstractMoreLocalDateAssert<?> with(final TemporalAdjuster adjuster) {
+    default AbstractMoreLocalDateAssert<?> extractingWith(final TemporalAdjuster adjuster) {
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> MoreJavaTimeAssertions.assertMore(a.with(adjuster))
@@ -330,7 +330,7 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
     }
 
     @Override
-    default AbstractMoreLocalDateAssert<?> with(final TemporalField field, final long newValue) {
+    default AbstractMoreLocalDateAssert<?> extractingWith(final TemporalField field, final long newValue) {
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> MoreJavaTimeAssertions.assertMore(a.with(field, newValue))

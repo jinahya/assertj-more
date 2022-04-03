@@ -2,6 +2,7 @@ package com.github.jinahya.assertj.more.java.time.chrono;
 
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAdjusterAssert;
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAssert;
+import org.assertj.core.api.ComparableAssert;
 
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.ChronoLocalDateTime;
@@ -15,6 +16,7 @@ public interface MoreChronoLocalDateTimeAssert<
         A extends ChronoLocalDateTime<D>,
         D extends ChronoLocalDate>
         extends MoreJavaTimeChronoAssert<S, A>,
+                ComparableAssert<S, A>,
                 MoreTemporalAssert<S, A>,
                 MoreTemporalAdjusterAssert<S, A> {
 
@@ -31,8 +33,8 @@ public interface MoreChronoLocalDateTimeAssert<
     MoreChronoLocalDateTimeAssert<?, A, D> extractingPlus(TemporalAmount amount);
 
     @Override
-    MoreChronoLocalDateTimeAssert<?, A, D> with(TemporalAdjuster adjuster);
+    MoreChronoLocalDateTimeAssert<?, A, D> extractingWith(TemporalAdjuster adjuster);
 
     @Override
-    MoreChronoLocalDateTimeAssert<?, A, D> with(TemporalField field, long newValue);
+    MoreChronoLocalDateTimeAssert<?, A, D> extractingWith(TemporalField field, long newValue);
 }

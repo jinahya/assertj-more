@@ -26,7 +26,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(offset, "offset is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.atOffset(offset),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -37,7 +37,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(zone, "zone is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.atZone(zone),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -91,7 +91,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(unit, "unit is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.minus(amountToSubtract, unit),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -103,7 +103,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(amount, "amount is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.minus(amount),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -113,7 +113,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default AbstractMoreInstantAssert<?> extractingMinusMillis(final long millisToSubtract) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.minusMillis(millisToSubtract),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -123,7 +123,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default AbstractMoreInstantAssert<?> extractingMinusNanos(final long nanosToSubtract) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.minusNanos(nanosToSubtract),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -133,7 +133,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default AbstractMoreInstantAssert<?> extractingMinusSeconds(final long secondsToSubtract) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.minusSeconds(secondsToSubtract),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -145,7 +145,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(unit, "unit is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.plus(amountToAdd, unit),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -157,7 +157,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(amount, "amount is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.plus(amount),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -167,7 +167,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default AbstractMoreInstantAssert<?> extractingPlusMillis(final long millisToAdd) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.plusMillis(millisToAdd),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -177,7 +177,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default AbstractMoreInstantAssert<?> extractingPlusNanos(final long nanosToAdd) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.plusNanos(nanosToAdd),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -187,7 +187,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default MoreInstantAssert<?> extractingPlusSeconds(final long secondsToAdd) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.plusSeconds(secondsToAdd),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -204,7 +204,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     default S hasEpochMilli(final long expected) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         a::toEpochMilli,
                         r -> {
                             Assertions.assertThat(r).isEqualTo(expected);
@@ -218,7 +218,7 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
         Objects.requireNonNull(unit, "unit is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.truncatedTo(unit),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -226,11 +226,11 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     }
 
     @Override
-    default AbstractMoreInstantAssert<?> with(final TemporalAdjuster adjuster) {
+    default AbstractMoreInstantAssert<?> extractingWith(final TemporalAdjuster adjuster) {
         Objects.requireNonNull(adjuster, "adjuster is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.with(adjuster),
                         MoreJavaTimeAssertions::assertMore
                 )
@@ -238,11 +238,11 @@ public interface MoreInstantAssert<S extends MoreInstantAssert<S>>
     }
 
     @Override
-    default AbstractMoreInstantAssert<?> with(final TemporalField field, final long newValue) {
+    default AbstractMoreInstantAssert<?> extractingWith(final TemporalField field, final long newValue) {
         Objects.requireNonNull(field, "field is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApply(
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
                         () -> a.with(field, newValue),
                         MoreJavaTimeAssertions::assertMore
                 )

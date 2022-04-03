@@ -1,5 +1,6 @@
 package com.github.jinahya.assertj.more.java.time;
 
+import com.github.jinahya.assertj.more.api.ComparableAssertProxy;
 import org.assertj.core.api.AbstractLocalDateAssert;
 
 import java.time.LocalDate;
@@ -12,7 +13,8 @@ import java.time.LocalDate;
  */
 public abstract class AbstractMoreLocalDateAssert<S extends AbstractMoreLocalDateAssert<S>>
         extends AbstractLocalDateAssert<S>
-        implements MoreLocalDateAssert<S> {
+        implements MoreLocalDateAssert<S>,
+                   ComparableAssertProxy<S, LocalDate> {
 
     /**
      * Creates a new instance with specified actual.
