@@ -89,7 +89,7 @@ public interface MoreTemporalAssert<S extends MoreTemporalAssert<S, A>, A extend
         );
     }
 
-    MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalAdjuster adjuster);
+    MoreTemporalAssert<?, A> extractingWith(TemporalAdjuster adjuster);
 
-    MoreTemporalAssert<?, ? extends Temporal> extractingWith(TemporalField field, long newValue);
+    MoreTemporalAssert<?, A> extractingWith(TemporalField field, long newValue);
 }

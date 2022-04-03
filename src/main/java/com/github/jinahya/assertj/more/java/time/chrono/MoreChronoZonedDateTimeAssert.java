@@ -33,8 +33,8 @@ public interface MoreChronoZonedDateTimeAssert<
     MoreChronoZonedDateTimeAssert<?, A, D> extractingPlus(TemporalAmount amount);
 
     @Override
-    MoreChronoZonedDateTimeAssert<?, ? extends A, D> extractingWith(TemporalAdjuster adjuster);
+    MoreChronoZonedDateTimeAssert<?, A, D> extractingWith(TemporalAdjuster adjuster);
 
     @Override
-    MoreChronoZonedDateTimeAssert<?, ? extends A, D> extractingWith(TemporalField field, long newValue);
+    MoreChronoZonedDateTimeAssert<?, A, D> extractingWith(TemporalField field, long newValue);
 }
