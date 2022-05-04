@@ -23,8 +23,8 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
                 MoreChronoLocalDateAssert<S, LocalDate> {
 
     /**
-     * Returns a new assertion instance for verifying the result of {@link LocalDate#atStartOfDay()
-     * actual.atStartOfDay()}.
+     * Returns a new assertion instance for verifying the result of
+     * {@link LocalDate#atStartOfDay() actual.atStartOfDay()}.
      *
      * @return a new assertion of {@link java.time.LocalDateTime}.
      * @see LocalDate#atStartOfDay()
@@ -37,8 +37,8 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
     }
 
     /**
-     * Returns a new assertion instance for verifying the result of {@link LocalDate#atStartOfDay(ZoneId)
-     * actual.atStartOfDay(zone)}.
+     * Returns a new assertion instance for verifying the result of
+     * {@link LocalDate#atStartOfDay(ZoneId) actual.atStartOfDay(zone)}.
      *
      * @param zone the argument.
      * @return a new assertion of {@link java.time.LocalDateTime}.
@@ -52,8 +52,8 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
     }
 
     /**
-     * Returns a new assertion instance for verifying the result of {@link LocalDate#atTime(int, int, int)
-     * actual.atTime(hour, minute, second)}
+     * Returns a new assertion instance for verifying the result of
+     * {@link LocalDate#atTime(int, int, int) actual.atTime(hour, minute, second)}
      *
      * @param hour   the hour.
      * @param minute the minute.
@@ -69,8 +69,8 @@ public interface MoreLocalDateAssert<S extends MoreLocalDateAssert<S>>
     }
 
     /**
-     * Returns a new assertion instance for verifying the result of {@link LocalDate#atTime(int, int, int, int)
-     * actual.atTime(hour, minute, second, nanoOfSecond)}
+     * Returns a new assertion instance for verifying the result of
+     * {@link LocalDate#atTime(int, int, int, int) actual.atTime(hour, minute, second, nanoOfSecond)}
      *
      * @param hour         a value for the {@code hour} argument.
      * @param minute       a value for the {@code minute} argument.

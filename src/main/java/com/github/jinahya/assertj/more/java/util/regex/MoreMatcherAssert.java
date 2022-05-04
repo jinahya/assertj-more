@@ -196,8 +196,8 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     }
 
     /**
-     * Verifies that the {@link Matcher#hasAnchoringBounds()} method, invokes on the {@code actual}, returns {@code
-     * true}.
+     * Verifies that the {@link Matcher#hasAnchoringBounds()} method, invokes on the {@code actual}, returns
+     * {@code true}.
      *
      * @return this assertion instance.
      */
@@ -213,8 +213,8 @@ public interface MoreMatcherAssert<S extends MoreMatcherAssert<S>>
     }
 
     /**
-     * Verifies that the {@link Matcher#hasAnchoringBounds()} method, invokes on the {@code actual}, returns {@code
-     * false}.
+     * Verifies that the {@link Matcher#hasAnchoringBounds()} method, invokes on the {@code actual}, returns
+     * {@code false}.
      *
      * @return this assertion instance.
      */

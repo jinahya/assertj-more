@@ -26,8 +26,8 @@ public class MoreAssertions
      * @param <V>      the type of the result of the {@code callable}
      * @param <R>      the type of the result of the {@code function}
      * @return the result of the {@code function}.
-     * @deprecated Prematurely deprecated; Keep checking the status of the <a href="https://github.com/assertj/assertj-core/issues/1652">related
-     * issue</a>.
+     * @deprecated Prematurely deprecated; Keep checking the status of the <a
+     * href="https://github.com/assertj/assertj-core/issues/1652">related issue</a>.
      */
     @Deprecated // https://github.com/assertj/assertj-core/issues/1652
     public static <V, R> R assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
