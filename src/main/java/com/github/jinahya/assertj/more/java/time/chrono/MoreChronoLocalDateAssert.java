@@ -263,8 +263,8 @@ public interface MoreChronoLocalDateAssert<
     MoreChronoPeriodAssert<?, ? extends ChronoPeriod> extractingUntil(ChronoLocalDate endDateExclusive);
 
     @Override
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingWith(TemporalAdjuster adjuster);
+    MoreChronoLocalDateAssert<?, A> extractingWith(TemporalAdjuster adjuster);
 
     @Override
-    MoreChronoLocalDateAssert<?, ? extends ChronoLocalDate> extractingWith(TemporalField field, long newValue);
+    MoreChronoLocalDateAssert<?, A> extractingWith(TemporalField field, long newValue);
 }

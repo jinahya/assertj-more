@@ -1,5 +1,6 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
+import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
 import com.github.jinahya.assertj.more.java.time.AbstractMoreDurationAssert;
 import com.github.jinahya.assertj.more.java.time.MoreJavaTimeAssertions;
@@ -17,18 +18,27 @@ public interface MoreTemporalUnitAssert<S extends MoreTemporalUnitAssert<S, A>, 
     default <R extends Temporal> AbstractMoreTemporalAssert<?, R> extractingAddTo(
             final R temporal, final long amount,
             final AssertFactory<? super R, ? extends AbstractMoreTemporalAssert<?, R>> factory) {
+        Objects.requireNonNull(temporal, "temporal is null");
         Objects.requireNonNull(factory, "factory is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> factory.createAssert(a.addTo(temporal, amount))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.addTo(temporal, amount),
+                        factory::createAssert
+                )
         );
     }
 
-    default AbstractLongAssert<?> between(final Temporal temporal1Inclusive,
-                                          final Temporal temporal2Exclusive) {
+    default AbstractLongAssert<?> extractingBetween(final Temporal temporal1Inclusive,
+                                                    final Temporal temporal2Exclusive) {
+        Objects.requireNonNull(temporal1Inclusive, "temporal1Inclusive is null");
+        Objects.requireNonNull(temporal2Exclusive, "temporal2Exclusive is null");
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> Assertions.assertThat(a.between(temporal1Inclusive, temporal2Exclusive))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.between(temporal1Inclusive, temporal2Exclusive),
+                        Assertions::assertThat
+                )
         );
     }
 
@@ -84,6 +94,7 @@ public interface MoreTemporalUnitAssert<S extends MoreTemporalUnitAssert<S, A>, 
     }
 
     default S isSupportedBy(final Temporal temporal) {
+        Objects.requireNonNull(temporal, "temporal is null");
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> {
@@ -95,6 +106,7 @@ public interface MoreTemporalUnitAssert<S extends MoreTemporalUnitAssert<S, A>, 
     }
 
     default S isNotSupportedBy(final Temporal temporal) {
+        Objects.requireNonNull(temporal, "temporal is null");
         return ForAssert.applyActual2(
                 isNotNull(),
                 s -> a -> {

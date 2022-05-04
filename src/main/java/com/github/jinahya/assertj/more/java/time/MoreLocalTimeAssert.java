@@ -2,7 +2,6 @@ package com.github.jinahya.assertj.more.java.time;
 
 import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
-import com.github.jinahya.assertj.more.java.time.temporal.MoreJavaTimeTemporalAssertions;
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAdjusterAssert;
 import com.github.jinahya.assertj.more.java.time.temporal.MoreTemporalAssert;
 import org.assertj.core.api.AbstractStringAssert;

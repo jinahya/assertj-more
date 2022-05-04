@@ -1,7 +1,7 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
+import com.github.jinahya.assertj.more.api.MoreAssertions;
 import com.github.jinahya.assertj.more.hidden.ForAssert;
-import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ListAssert;
 
@@ -12,18 +12,27 @@ import java.time.temporal.TemporalUnit;
 public interface MoreTemporalAmountAssert<S extends MoreTemporalAmountAssert<S, A>, A extends TemporalAmount>
         extends MoreJavaTimeTemporalAssert<S, A> {
 
-    // ----------------------------------------------------------------------------------------- addTo(Temporal)Temporal
     default AbstractMoreTemporalAssert<?, Temporal> extractingAddTo(final Temporal temporal) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeTemporalAssertions.assertMore(a.addTo(temporal))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.addTo(temporal),
+                        MoreJavaTimeTemporalAssertions::assertMore
+                )
         );
     }
 
-    default AbstractLongAssert<?> extracting(final TemporalUnit unit) {
+    default S has(final TemporalUnit unit, final long expected) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> Assertions.assertThat(a.get(unit))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.get(unit),
+                        r -> {
+                            Assertions.assertThat(r)
+                                    .isEqualTo(expected);
+                            return s;
+                        }
+                )
         );
     }
 
@@ -37,7 +46,10 @@ public interface MoreTemporalAmountAssert<S extends MoreTemporalAmountAssert<S, 
     default AbstractMoreTemporalAssert<?, Temporal> extractingSubtractFrom(final Temporal temporal) {
         return ForAssert.applyActual2(
                 isNotNull(),
-                s -> a -> MoreJavaTimeTemporalAssertions.assertMore(a.subtractFrom(temporal))
+                s -> a -> MoreAssertions.assertThatCodeDoesNotThrowAnyExceptionAndApplyResult(
+                        () -> a.subtractFrom(temporal),
+                        MoreJavaTimeTemporalAssertions::assertMore
+                )
         );
     }
 }
