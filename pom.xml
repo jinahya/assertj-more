@@ -48,12 +48,30 @@
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
-    <version.maven-javadoc-plugin>3.1.0</version.maven-javadoc-plugin>
-    <version.maven-surefire>3.0.0-M6</version.maven-surefire>
-    <version.org.junit.jupiter>5.8.2</version.org.junit.jupiter>
-    <version.org.mockito>4.4.0</version.org.mockito>
+    <version.maven-javadoc-plugin>3.4.1</version.maven-javadoc-plugin>
+    <version.maven-surefire>3.0.0-M7</version.maven-surefire>
+    <version.org.junit.jupiter>5.9.2</version.org.junit.jupiter>
+    <version.org.mockito>5.1.1</version.org.mockito>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-bom</artifactId>
+        <version>3.24.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-bom</artifactId>
+        <version>5.1.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -71,7 +89,6 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.22.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -118,6 +135,11 @@
     <!--      </exclusions>-->
     <!--    </dependency>-->
     <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.24</version>
@@ -149,7 +171,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.7</version>
+          <version>2.12.0</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -167,7 +189,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <executions>
           <execution>
             <id>enforce</id>
@@ -297,22 +319,22 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.5.3.0</version>
+        <version>4.7.2.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.1.1</version>
+        <version>3.3.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.4.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -328,7 +350,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.15.0</version>
+        <version>3.19.0</version>
         <configuration>
           <targetJdk>1.6</targetJdk>
           <skipEmptyReport>false</skipEmptyReport> <!-- https://issues.apache.org/jira/browse/MPMD-225 -->
