@@ -1,14 +1,7 @@
 package com.github.jinahya.assertj.more.java.time.temporal;
 
 import com.github.jinahya.assertj.more.AbstractMoreAssertions;
-import org.assertj.core.api.Assert;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.internal.bytebuddy.ByteBuddy;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAccessor;
@@ -39,30 +32,30 @@ public class MoreJavaTimeTemporalAssertions
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static <
-            S extends Assert<S, A> & MoreJavaTimeTemporalAssert<S, A>,
-            A extends Temporal>
-    S assertMore(final A actual, final Class<A> type) {
-        try {
-            Assertions.assertThat(LocalDate.now());
-            final MethodHandle handle = MethodHandles.lookup().findStatic(
-                    Assertions.class, "assertThat", MethodType.methodType(AbstractTemporalAssert.class, type));
-            try {
-                final Class<?> core = handle.invoke(actual).getClass();
-                final Class<?> more = new ByteBuddy()
-                        .subclass(core)
-                        .implement(MoreJavaTimeTemporalAssert.class)
-                        .make()
-                        .load(MoreJavaTimeTemporalAssertions.class.getClassLoader())
-                        .getLoaded();
-                return (S) more.getConstructor(type).newInstance(actual);
-            } catch (final Throwable t) {
-                throw new RuntimeException(t);
-            }
-        } catch (final ReflectiveOperationException roe) {
-            throw new RuntimeException(roe);
-        }
-    }
+//    public static <
+//            S extends Assert<S, A> & MoreJavaTimeTemporalAssert<S, A>,
+//            A extends Temporal>
+//    S assertMore(final A actual, final Class<A> type) {
+//        try {
+//            Assertions.assertThat(LocalDate.now());
+//            final MethodHandle handle = MethodHandles.lookup().findStatic(
+//                    Assertions.class, "assertThat", MethodType.methodType(AbstractTemporalAssert.class, type));
+//            try {
+//                final Class<?> core = handle.invoke(actual).getClass();
+//                final Class<?> more = new ByteBuddy()
+//                        .subclass(core)
+//                        .implement(MoreJavaTimeTemporalAssert.class)
+//                        .make()
+//                        .load(MoreJavaTimeTemporalAssertions.class.getClassLoader())
+//                        .getLoaded();
+//                return (S) more.getConstructor(type).newInstance(actual);
+//            } catch (final Throwable t) {
+//                throw new RuntimeException(t);
+//            }
+//        } catch (final ReflectiveOperationException roe) {
+//            throw new RuntimeException(roe);
+//        }
+//    }
 
     public static AbstractMoreValueRangeAssert<?> assertMore(final ValueRange actual) {
         return new MoreValueRangeAssertImpl(actual);
