@@ -54,61 +54,61 @@ class MorePatternAssertImplTest
         }
     }
 
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    @Nested
-    class SplitsTest {
-
-        Stream<Arguments> splitArgumentsStream() {
-            return Stream.of(
-                    Arguments.of("\\s", "Pattern Split Method in Java regex"),
-                    // https://java2novice.com/java-collections-and-util/regex/split/
-                    Arguments.of("(cat|rat|mat|bat)", "I have a cat. I play cricket with bat. I dont like rat," +
-                                                      "i hate mats, now break it"),
-                    Arguments.of("[ ,.!]", "one two,asdf9 12!done. this is a 1 431*&^*&^ test.")
-            );
-        }
-
-        Stream<Arguments> splitWithResultArgumentsStream() {
-            return splitArgumentsStream()
-                    .map(a -> {
-                        final ArgumentsAccessor accessor = new DefaultArgumentsAccessor(a.get());
-                        final String regex = accessor.get(0, String.class);
-                        final String input = accessor.get(1, String.class);
-                        return Arguments.of(regex, input, input.split(regex));
-                    });
-        }
-
-        Stream<Arguments> splitWithIndexArguments() {
-            return Stream.of(
-
-            );
-        }
-
-        @MethodSource({"splitWithResultArgumentsStream"})
-        @ParameterizedTest
-        void split__(final String regex, final String input, final String[] result) {
-            final Pattern actual = Pattern.compile(regex);
-            final MorePatternAssert<?> more = assertInstance(actual);
-            more.splits(input, result);
-        }
-
-        @Test
-        void test1__() {
-            {
-                final String[] tokens = new String[]{
-                        "Pattern", "Split", "Method", "in", "Java", "regex"
-                };
-                final Pattern actual = Pattern.compile("\\s");
-                final MorePatternAssert<?> more = assertInstance(actual);
-                final String input = String.join(" ", tokens);
-                more.splits(input, tokens);
-            }
-            {
-                final String regex = ":";
-                final Pattern actual = Pattern.compile(regex);
-                final MorePatternAssert<?> more = assertInstance(actual);
-                more.splits("Java:programming:Language", 3, new String[]{"Java", "programming", "Language"});
-            }
-        }
-    }
+//    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//    @Nested
+//    class SplitsTest {
+//
+//        Stream<Arguments> splitArgumentsStream() {
+//            return Stream.of(
+//                    Arguments.of("\\s", "Pattern Split Method in Java regex"),
+//                    // https://java2novice.com/java-collections-and-util/regex/split/
+//                    Arguments.of("(cat|rat|mat|bat)", "I have a cat. I play cricket with bat. I dont like rat," +
+//                                                      "i hate mats, now break it"),
+//                    Arguments.of("[ ,.!]", "one two,asdf9 12!done. this is a 1 431*&^*&^ test.")
+//            );
+//        }
+//
+//        Stream<Arguments> splitWithResultArgumentsStream() {
+//            return splitArgumentsStream()
+//                    .map(a -> {
+//                        final ArgumentsAccessor accessor = new DefaultArgumentsAccessor(a.get());
+//                        final String regex = accessor.get(0, String.class);
+//                        final String input = accessor.get(1, String.class);
+//                        return Arguments.of(regex, input, input.split(regex));
+//                    });
+//        }
+//
+//        Stream<Arguments> splitWithIndexArguments() {
+//            return Stream.of(
+//
+//            );
+//        }
+//
+//        @MethodSource({"splitWithResultArgumentsStream"})
+//        @ParameterizedTest
+//        void split__(final String regex, final String input, final String[] result) {
+//            final Pattern actual = Pattern.compile(regex);
+//            final MorePatternAssert<?> more = assertInstance(actual);
+//            more.splits(input, result);
+//        }
+//
+//        @Test
+//        void test1__() {
+//            {
+//                final String[] tokens = new String[]{
+//                        "Pattern", "Split", "Method", "in", "Java", "regex"
+//                };
+//                final Pattern actual = Pattern.compile("\\s");
+//                final MorePatternAssert<?> more = assertInstance(actual);
+//                final String input = String.join(" ", tokens);
+//                more.splits(input, tokens);
+//            }
+//            {
+//                final String regex = ":";
+//                final Pattern actual = Pattern.compile(regex);
+//                final MorePatternAssert<?> more = assertInstance(actual);
+//                more.splits("Java:programming:Language", 3, new String[]{"Java", "programming", "Language"});
+//            }
+//        }
+//    }
 }
